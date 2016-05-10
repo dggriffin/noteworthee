@@ -2,9 +2,8 @@
 .toolbar {
   background-color: #A33E61;
   padding: 1.5em;
-  margin-left: auto;
-  margin-right: auto;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   margin-top: 1em;
 }

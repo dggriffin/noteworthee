@@ -129,7 +129,7 @@ export default class Note extends React.Component {
     return (
       <Card
         expanded={this.state.expanded}
-        style={{width: 300, margin: '.5em'}}
+        style={{maxWidth: 300, margin: '.5em'}}
         expandable={true}>
         <CardHeader
           title={this.state.data.message}
