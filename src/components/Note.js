@@ -86,10 +86,11 @@ export default class Note extends React.Component {
   }
 
   handleSubmitComment(){
+    let comments = this.state.data.comments ? this.state.data.comments : [];
     this.setState({
       data: {
         ...this.state.data,
-        comments: this.state.data.comments.concat([this.state.commentValue])
+        comments: comments.concat([this.state.commentValue])
       }
     });
     this.setState({commentValue: ''});
