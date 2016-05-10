@@ -136,17 +136,20 @@ export default class Note extends React.Component {
           avatar={this.state.data.mood === 'happy' ? <HappyIcon style={{fill: '#7BD1EE', width: 50, height: 50}}/> : <SadIcon style={{fill: '#EF5A8F', width: 50, height: 50}}/>}
           actAsExpander={true}
           titleColor={'#646464'}
-          subtitle={this.getElapsedTime()}
+          subtitle={`${this.getElapsedTime()} ago`}
+          subtitleStyle={{paddingTop: '1em'}}
           />
         <CardActions>
           <FlatButton
             primary={true}
             label={`Like (${this.state.data.likes})`}
-            onClick={this.handleLike.bind(this)}/> />
+            onClick={this.handleLike.bind(this)}
+          />
           <FlatButton
             secondary={true}
             label={` ${this.state.expanded ? 'Hide Comments' : 'Comment'} (${this.state.data.comments ? this.state.data.comments.length : '0'})`}
-            onClick={this.handleToggleComments.bind(this)}/>
+            onClick={this.handleToggleComments.bind(this)}
+          />
         </CardActions>
         <CardText expandable={true}>
           {this.renderCommentSection()}
