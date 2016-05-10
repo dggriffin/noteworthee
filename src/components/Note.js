@@ -96,8 +96,9 @@ export default class Note extends React.Component {
   }
 
   renderCommentSection(){
+    let comments = [];
     if (this.state.data.comments) {
-      let comments = this.state.data.comments.map( comment =>
+      comments = this.state.data.comments.map( comment =>
         [
           <MenuItem key={comment}>
             <p style={{whiteSpace: 'normal', overflow: 'hidden'}}>
@@ -107,20 +108,20 @@ export default class Note extends React.Component {
           <Divider />
         ]
       );
-      return [ comments,
-        <TextField
-          key='field'
-          floatingLabelText="Comment"
-          onChange={this.handleCommentChange.bind(this)}
-          value={this.state.commentValue}
-          />,
-        <RaisedButton
-          key='button'
-          primary={true}
-          label='Submit'
-          onClick={this.handleSubmitComment.bind(this)}/>
-      ];
     }
+    return [ comments,
+      <TextField
+        key='field'
+        floatingLabelText="Comment"
+        onChange={this.handleCommentChange.bind(this)}
+        value={this.state.commentValue}
+        />,
+      <RaisedButton
+        key='button'
+        primary={true}
+        label='Submit'
+        onClick={this.handleSubmitComment.bind(this)}/>
+    ];
   }
 
   render() {
