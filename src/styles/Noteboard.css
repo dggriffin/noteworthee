@@ -1,0 +1,12 @@
+/* Base Application Styles */
+.content {
+  background-color: #3587A2;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: flex-start;;
+  align-items: flex-start;
+  min-height: 40em;
+  padding: 2em;
+}

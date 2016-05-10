@@ -1,0 +1,10 @@
+/* Base Application Styles */
+.toolbar {
+  background-color: #A33E61;
+  padding: 1.5em;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1em;
+}

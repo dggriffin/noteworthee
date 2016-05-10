@@ -61,6 +61,7 @@
     "webpack-dev-server": "^1.12.0"
   },
   "dependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.8.0",
     "core-js": "^2.0.0",
     "material-ui": "^0.15.0",
     "normalize.css": "^4.0.0",
@@ -68,6 +69,7 @@
     "react": "^15.0.0",
     "react-dom": "^15.0.0",
     "react-flip-move": "^2.2.0",
-    "react-tap-event-plugin": "^1.0.0"
+    "react-tap-event-plugin": "^1.0.0",
+    "underscore": "^1.8.3"
   }
 }
