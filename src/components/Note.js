@@ -16,29 +16,26 @@ export default class Note extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      comments: [],
       expanded: false,
       commentValue: '',
+      data: {
+        comments: [],
+        likes: 0
+      },
       ...props,
     };
   }
 
   componentDidMount(){
-    this.commentRef = base.syncState(`notes/${this.state.id}/comments`, {
+    this.ref = base.syncState(`notes/${this.state.id}`, {
       context: this,
-      state: 'comments',
-      asArray: true
-    });
-
-    this.likeRef = base.syncState(`notes/${this.state.id}/likes`, {
-      context: this,
-      state: 'likes'
+      state: 'data',
+      asArray: false
     });
   }
 
   componentWillUnmount(){
-    base.removeBinding(this.commentRef);
-    base.removeBinding(this.likeRef);
+    base.removeBinding(this.ref);
   }
 
   handleToggleComments(){
@@ -53,41 +50,77 @@ export default class Note extends React.Component {
 
   handleLike(){
     this.setState({
-      likes: this.state.likes+1
+      data: {
+        ...this.state.data,
+        likes: this.state.data.likes+1
+      }
     });
+  }
+
+  getElapsedTime(){
+    var date = new Date(this.state.data.dateCreated);
+    var seconds = Math.floor((new Date() - date) / 1000);
+
+    var interval = Math.floor(seconds / 31536000);
+
+    if (interval > 1) {
+      return interval + ' years';
+    }
+    interval = Math.floor(seconds / 2592000);
+    if (interval > 1) {
+      return interval + ' months';
+    }
+    interval = Math.floor(seconds / 86400);
+    if (interval > 1) {
+      return interval + ' days';
+    }
+    interval = Math.floor(seconds / 3600);
+    if (interval > 1) {
+      return interval + ' hours';
+    }
+    interval = Math.floor(seconds / 60);
+    if (interval > 1) {
+      return interval + ' minutes';
+    }
+    return Math.floor(seconds) + ' seconds';
   }
 
   handleSubmitComment(){
     this.setState({
-      comments: this.state.comments.concat([this.state.commentValue])
+      data: {
+        ...this.state.data,
+        comments: this.state.data.comments.concat([this.state.commentValue])
+      }
     });
     this.setState({commentValue: ''});
   }
 
   renderCommentSection(){
-    let comments = Object.keys(this.state.comments).map( key =>
-      [
-        <MenuItem key={key}>
-          <p style={{whiteSpace: 'normal', overflow: 'hidden'}}>
-            {this.state.comments[key]}
-          </p>
-        </MenuItem>,
-        <Divider />
-      ]
-    );
-    return [ comments,
-      <TextField
-        key='field'
-        floatingLabelText="Comment"
-        onChange={this.handleCommentChange.bind(this)}
-        value={this.state.commentValue}
-        />,
-      <RaisedButton
-        key='button'
-        primary={true}
-        label='Submit'
-        onClick={this.handleSubmitComment.bind(this)}/>
-    ];
+    if (this.state.data.comments) {
+      let comments = this.state.data.comments.map( comment =>
+        [
+          <MenuItem key={comment}>
+            <p style={{whiteSpace: 'normal', overflow: 'hidden'}}>
+              {comment}
+            </p>
+          </MenuItem>,
+          <Divider />
+        ]
+      );
+      return [ comments,
+        <TextField
+          key='field'
+          floatingLabelText="Comment"
+          onChange={this.handleCommentChange.bind(this)}
+          value={this.state.commentValue}
+          />,
+        <RaisedButton
+          key='button'
+          primary={true}
+          label='Submit'
+          onClick={this.handleSubmitComment.bind(this)}/>
+      ];
+    }
   }
 
   render() {
@@ -97,19 +130,20 @@ export default class Note extends React.Component {
         style={{width: 300, margin: '.5em'}}
         expandable={true}>
         <CardHeader
-          title={this.state.message}
-          avatar={this.state.mood === 'happy' ? <HappyIcon style={{fill: '#7BD1EE', width: 50, height: 50}}/> : <SadIcon style={{fill: '#EF5A8F', width: 50, height: 50}}/>}
+          title={this.state.data.message}
+          avatar={this.state.data.mood === 'happy' ? <HappyIcon style={{fill: '#7BD1EE', width: 50, height: 50}}/> : <SadIcon style={{fill: '#EF5A8F', width: 50, height: 50}}/>}
           actAsExpander={true}
           titleColor={'#646464'}
+          subtitle={this.getElapsedTime()}
           />
         <CardActions>
           <FlatButton
             primary={true}
-            label={`Like (${this.state.likes})`}
+            label={`Like (${this.state.data.likes})`}
             onClick={this.handleLike.bind(this)}/> />
           <FlatButton
             secondary={true}
-            label={` ${this.state.expanded ? 'Hide Comments' : 'Comment'} (${Object.keys(this.state.comments).length})`}
+            label={` ${this.state.expanded ? 'Hide Comments' : 'Comment'} (${this.state.data.comments ? this.state.data.comments.length : '0'})`}
             onClick={this.handleToggleComments.bind(this)}/>
         </CardActions>
         <CardText expandable={true}>

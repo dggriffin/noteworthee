@@ -23,7 +23,7 @@ class Noteboard extends React.Component {
   renderNotes() {
     return this.state.notes.map( note =>
       <div key={note.key}>
-        <Note {...note} id={note.key}/>
+        <Note id={note.key}/>
       </div>
     );
   }

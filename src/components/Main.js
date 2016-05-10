@@ -53,12 +53,22 @@ class AppComponent extends React.Component {
     this.setState({
       notes: this.state.notes.concat([{
         message: this.state.messageValue,
+        dateCreated: new Date().getTime(),
         likes: 0,
         comments: [],
         mood: this.state.moodState,
         key: `${this.state.notes.length}`
       }]),
       dialogOpen: false
+    });
+  }
+
+  handleArchiveClick(){
+    base.push(`archives/${new Date().toISOString().split('T')[0]}`, {
+      data: this.state.notes
+    });
+    this.setState({
+      notes: []
     });
   }
 
@@ -138,10 +148,16 @@ class AppComponent extends React.Component {
                   secondary={true}
                   onClick={this.handleToggleSad.bind(this)} />
               </div>
-              <RaisedButton
-                label="+ Add Note"
-                secondary={true}
-                onClick={this.handleDialogOpen.bind(this)} />
+              <div style={{display: 'flex'}}>
+                <FlatButton
+                  label="Archive"
+                  secondary={true}
+                  onClick={this.handleArchiveClick.bind(this)} />
+                <RaisedButton
+                  label="+ Add Note"
+                  secondary={true}
+                  onClick={this.handleDialogOpen.bind(this)} />
+              </div>
             </div>
             <Noteboard notes={this.getFilteredNotes()} />
           </Paper>
