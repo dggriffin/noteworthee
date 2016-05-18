@@ -25,6 +25,7 @@ class TeamView extends React.Component {
       showHappy: true,
       showSad: true,
       boardsLoading: true,
+      boardList: [],
       ...props
     };
   }
