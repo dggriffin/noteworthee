@@ -159,7 +159,9 @@ class TeamView extends React.Component {
           <div className={styles.boardList}>
             <div className={styles.boardListContent}>
               <div className={styles.boardListTitle}>
-                {this.state.params.teamName}
+                <Link style={{textDecoration: 'none', color: 'white'}} to={`/${this.state.params.teamName}`}>
+                   {this.state.params.teamName}
+                </Link>
               </div>
                 <p style={{color:'white', textAlign: 'center'}}>Boards: </p>
                 {this.state.boardsLoading ?
