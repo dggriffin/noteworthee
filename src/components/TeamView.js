@@ -42,7 +42,12 @@ class TeamView extends React.Component {
     base.fetch(`notes/${this.state.params.teamName}`, {
       context: this,
       then(data){
-        this.setState({boardList: Object.keys(data), boardsLoading: false});
+        if (data) {
+          this.setState({boardList: Object.keys(data), boardsLoading: false});
+        }
+        else {
+          this.setState({boardsLoading: false});
+        }
       }
     });
   }
