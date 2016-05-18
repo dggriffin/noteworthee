@@ -1,6 +1,6 @@
 /* Base Application Styles */
 .content {
-  background-color: #3587A2;
+  background-color: #f7f7f7;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -9,4 +9,14 @@
   align-items: flex-start;
   min-height: 40em;
   padding: 2em;
+}
+
+.toolbar {
+  /*background-color: #A33E61;*/
+  background-color: #f7f7f7;
+  border-bottom: 1.5px solid #EDEDED;
+  padding: 1.5em;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }

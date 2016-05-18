@@ -1,9 +1,0 @@
-/* Base Application Styles */
-.toolbar {
-  background-color: #A33E61;
-  padding: 1.5em;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  margin-top: 1em;
-}

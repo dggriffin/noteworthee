@@ -1,0 +1,37 @@
+.teamContent {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  display: box;
+}
+
+.boardList {
+  width: 30%;
+  max-width: 220px;
+  background-color: #3587A2;
+  display: flex;
+  flex-direction: column;
+}
+.boardListContent {
+}
+
+.boardListTitle {
+  font-size: 2em;
+  text-align: center;
+  margin-bottom: 50px;
+  font-weight: 800;
+}
+
+.noBoard {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  font-size: 3em;
+  padding: 1em;
+  color:#7BD1EE;
+  text-align: center;
+  font-weight: 100;
+}

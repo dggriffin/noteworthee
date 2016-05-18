@@ -1,6 +1,6 @@
 import styles from 'styles/Note.css';
 import React from 'react';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import MenuItem from 'material-ui/MenuItem';
@@ -22,12 +22,12 @@ export default class Note extends React.Component {
         comments: [],
         likes: 0
       },
-      ...props,
+      ...props
     };
   }
 
   componentDidMount(){
-    this.ref = base.syncState(`notes/${this.state.id}`, {
+    this.ref = base.syncState(`notes/${this.state.team}/${this.state.board}/${this.state.index}`, {
       context: this,
       state: 'data',
       asArray: false
@@ -39,12 +39,12 @@ export default class Note extends React.Component {
   }
 
   handleToggleComments(){
-    this.setState({expanded: !this.state.expanded});
-  };
+    this.setState({expanded: !this.state.expanded})
+  }
 
   handleCommentChange(event){
     this.setState({
-      commentValue: event.target.value,
+      commentValue: event.target.value
     });
   }
 
