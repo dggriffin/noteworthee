@@ -11,13 +11,11 @@ class Noteboard extends React.Component {
     this.state = {
       ...props
     };
-  }
-
-  componentDidMount() {
-    Cookies.set(this.state.board, this.notes.length);
+    Cookies.set(props.board, props.noteCount);
   }
 
   componentWillReceiveProps(nextProps) {
+    Cookies.set(nextProps.board, nextProps.noteCount);
     this.setState({
       ...nextProps
     });

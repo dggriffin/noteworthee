@@ -43,11 +43,12 @@ class TeamView extends React.Component {
       }
     });
 
-    base.fetch(`notes/${this.state.params.teamName}`, {
+    base.syncState(`notes/${this.state.params.teamName}`, {
       context: this,
+      state: 'boardList',
       then(data){
         if (data) {
-          this.setState({boardList: Object.keys(data), boardsLoading: false});
+          this.setState({boardsLoading: false});
         }
         else {
           this.setState({boardsLoading: false});
@@ -151,8 +152,16 @@ class TeamView extends React.Component {
   }
 
   renderTeamBoards(){
-    return this.state.boardList.map((boardName) => {
-      return <MenuItem onClick={this.handleBoardSelect.bind(this, boardName)} key={boardName} style={{backgroundColor: boardName === this.state.boardValue ? '#2D7288' : '', fontWeight: Cookies.get(boardName) ? 500 : 100, color:'white', textAlign: 'center'}}>{boardName}</MenuItem>;
+    return Object.keys(this.state.boardList).map((boardName) => {
+      debugger;
+      var diff = Cookies.get(boardName) ? this.state.boardList[boardName].length - Cookies.get(boardName) : this.state.boardList[boardName].length;
+      diff = diff < 0 ? 0 : diff;
+      return <MenuItem
+        onClick={this.handleBoardSelect.bind(this, boardName)}
+        key={boardName}
+        style={{backgroundColor: boardName === this.state.boardValue ? '#2D7288' : '', fontWeight: diff ? 500 : 100, color:'white', textAlign: 'center'}}>
+        {boardName}{`${diff ? ` (${diff})` : ''}`}
+      </MenuItem>;
     })
   }
 
@@ -191,6 +200,7 @@ class TeamView extends React.Component {
             this.state.params.boardName ?
             <Noteboard
               notes={this.getFilteredNotes()}
+              noteCount={this.state.notes.length}
               handleToggleHappy={this.handleToggleHappy.bind(this)}
               handleToggleSad={this.handleToggleSad.bind(this)}
               handleDialogOpen={this.handleDialogOpen.bind(this)}
