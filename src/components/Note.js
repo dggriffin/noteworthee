@@ -8,6 +8,7 @@ import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
 import HappyIcon from 'material-ui/svg-icons/social/mood';
 import SadIcon from 'material-ui/svg-icons/social/mood-bad';
+import Cookies from 'cookies-js';
 
 import Rebase from 're-base';
 const base = Rebase.createClass('https://noteworthyapp.firebaseio.com');
@@ -48,13 +49,25 @@ export default class Note extends React.Component {
     });
   }
 
-  handleLike(){
-    this.setState({
-      data: {
-        ...this.state.data,
-        likes: this.state.data.likes+1
-      }
-    });
+  handleLike() {
+    if (Cookies.get(this.state.index)) {
+      this.setState({
+        data: {
+          ...this.state.data,
+          likes: this.state.data.likes-1
+        }
+      });
+      Cookies.expire(this.state.index);
+    }
+    else {
+      this.setState({
+        data: {
+          ...this.state.data,
+          likes: this.state.data.likes+1
+        }
+      });
+      Cookies.set(this.state.index, true);
+    }
   }
 
   getElapsedTime(){
@@ -142,7 +155,7 @@ export default class Note extends React.Component {
         <CardActions>
           <FlatButton
             primary={true}
-            label={`Like (${this.state.data.likes})`}
+            label={`${Cookies.get(this.state.index) ? 'Unlike' : 'Like'} (${this.state.data.likes})`}
             onClick={this.handleLike.bind(this)}
           />
           <FlatButton

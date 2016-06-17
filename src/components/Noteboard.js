@@ -2,7 +2,8 @@ import styles from 'styles/Noteboard.css';
 import React from 'react';
 import FlipMove from 'react-flip-move';
 import Note from 'components/Note'
-import { Paper, FlatButton, RaisedButton } from 'material-ui';
+import { Paper, FlatButton, RaisedButton, CircularProgress } from 'material-ui';
+import Cookies from 'cookies-js';
 
 class Noteboard extends React.Component {
   constructor(props) {
@@ -10,6 +11,10 @@ class Noteboard extends React.Component {
     this.state = {
       ...props
     };
+  }
+
+  componentDidMount() {
+    Cookies.set(this.state.board, this.notes.length);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -28,7 +33,7 @@ class Noteboard extends React.Component {
 
   render() {
     return (
-      <Paper style={{width: '100%', marginLeft: 'auto', marginRight: 'auto'}}>
+      <Paper style={{width: '100%', marginLeft: 'auto', marginRight: 'auto', backgroundColor: '#f7f7f7'}}>
         <div className={styles.toolbar}>
           <div style={{display: 'flex'}}>
             <FlatButton
@@ -51,12 +56,14 @@ class Noteboard extends React.Component {
               onClick={this.state.handleDialogOpen.bind(this)} />
           </div>
         </div>
-        <FlipMove
-          className={styles.content}
-          enterAnimation="elevator"
-          leaveAnimation="elevator">
-          { this.renderNotes() }
-        </FlipMove>
+        { this.state.loading ? <div style={{height: '82vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}><CircularProgress size={3}/></div> :
+          <FlipMove
+            className={styles.content}
+            enterAnimation="elevator"
+            leaveAnimation="elevator">
+            { this.renderNotes() }
+          </FlipMove>
+        }
       </Paper>
     );
   }

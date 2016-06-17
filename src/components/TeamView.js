@@ -3,12 +3,12 @@ require('styles/index.css');
 import styles from 'styles/TeamView.css'
 import React from 'react';
 import Rebase from 're-base';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Noteboard from 'components/Noteboard';
 import NoteDialog from 'components/NoteDialog';
 import { TextField, RaisedButton, MenuItem } from 'material-ui';
 import { browserHistory, Link } from 'react-router';
 import _ from 'underscore';
+import Cookies from 'cookies-js';
 
 const base = Rebase.createClass('https://noteworthyapp.firebaseio.com');
 
@@ -30,13 +30,16 @@ class TeamView extends React.Component {
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.ref = base.syncState(`notes/${this.state.params.teamName}/${this.state.params.boardName}`, {
       context: this,
       state: 'notes',
       asArray: true,
       queries: {
         orderByChild: 'likes'
+      },
+      then() {
+        this.setState({boardValue: this.state.params.boardName});
       }
     });
 
@@ -130,21 +133,26 @@ class TeamView extends React.Component {
   }
 
   handleBoardSelect(boardName){
+    this.setState({boardValue: boardName});
     base.removeBinding(this.ref);
     browserHistory.push(`/${this.state.params.teamName}/${boardName}`);
+    this.setState({loading: true});
     this.ref = base.syncState(`notes/${this.state.params.teamName}/${boardName}`, {
       context: this,
       state: 'notes',
       asArray: true,
       queries: {
         orderByChild: 'likes'
+      },
+      then() {
+        this.setState({loading: false});
       }
     });
   }
 
   renderTeamBoards(){
     return this.state.boardList.map((boardName) => {
-      return <MenuItem onClick={this.handleBoardSelect.bind(this, boardName)} key={boardName} style={{color:'white', textAlign: 'center', fontWeight: 100}}>{boardName}</MenuItem>;
+      return <MenuItem onClick={this.handleBoardSelect.bind(this, boardName)} key={boardName} style={{backgroundColor: boardName === this.state.boardValue ? '#2D7288' : '', fontWeight: Cookies.get(boardName) ? 500 : 100, color:'white', textAlign: 'center'}}>{boardName}</MenuItem>;
     })
   }
 
@@ -159,13 +167,17 @@ class TeamView extends React.Component {
     }), 'likes').reverse();
   }
 
+  handleHomeClick(){
+    this.setState({boardValue: ''});
+  }
+
   render() {
     return (
         <div className={styles.teamContent}>
           <div className={styles.boardList}>
             <div className={styles.boardListContent}>
               <div className={styles.boardListTitle}>
-                <Link style={{textDecoration: 'none', color: 'white'}} to={`/${this.state.params.teamName}`}>
+                <Link style={{textDecoration: 'none', color: 'white'}} onClick={this.handleHomeClick.bind(this)} to={`/${this.state.params.teamName}`}>
                    {this.state.params.teamName}
                 </Link>
               </div>
@@ -187,9 +199,10 @@ class TeamView extends React.Component {
               showSad={this.state.showSad}
               team={this.state.params.teamName}
               board={this.state.params.boardName}
+              loading={this.state.loading}
             /> :
             <div className={styles.noBoard}>
-              Welcome to the <b style={{color: '#EF5A8F'}}>{this.state.params.teamName} noteworthy!</b>
+              Welcome to the <b style={{color: '#EF5A8F'}}>{this.state.params.teamName} noteworthee!</b>
               <br/>
               Create a board and get jotting!
               <div>

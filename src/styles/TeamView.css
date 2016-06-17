@@ -1,7 +1,7 @@
 .teamContent {
   display: flex;
   flex-direction: row;
-  height: 100%;
+  min-height: 100vh;
   display: box;
 }
 
@@ -11,7 +11,9 @@
   background-color: #3587A2;
   display: flex;
   flex-direction: column;
+  padding-top: 1em;
 }
+
 .boardListContent {
 }
 

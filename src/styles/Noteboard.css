@@ -7,8 +7,8 @@
   justify-content: center;
   align-content: flex-start;;
   align-items: flex-start;
-  min-height: 40em;
   padding: 2em;
+  min-height: 83vh;
 }
 
 .toolbar {
