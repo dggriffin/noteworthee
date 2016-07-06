@@ -50,14 +50,14 @@ export default class Note extends React.Component {
   }
 
   handleLike() {
-    if (Cookies.get(this.state.index)) {
+    if (Cookies.get(this.state.id)) {
       this.setState({
         data: {
           ...this.state.data,
           likes: this.state.data.likes-1
         }
       });
-      Cookies.expire(this.state.index);
+      Cookies.expire(this.state.id);
     }
     else {
       this.setState({
@@ -66,7 +66,7 @@ export default class Note extends React.Component {
           likes: this.state.data.likes+1
         }
       });
-      Cookies.set(this.state.index, true);
+      Cookies.set(this.state.id, true);
     }
   }
 
@@ -155,7 +155,7 @@ export default class Note extends React.Component {
         <CardActions>
           <FlatButton
             primary={true}
-            label={`${Cookies.get(this.state.index) ? 'Unlike' : 'Like'} (${this.state.data.likes})`}
+            label={`${Cookies.get(this.state.id) ? 'Unlike' : 'Like'} (${this.state.data.likes})`}
             onClick={this.handleLike.bind(this)}
           />
           <FlatButton

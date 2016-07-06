@@ -31,18 +31,6 @@ class TeamView extends React.Component {
   }
 
   componentDidMount() {
-    this.ref = base.syncState(`notes/${this.state.params.teamName}/${this.state.params.boardName}`, {
-      context: this,
-      state: 'notes',
-      asArray: true,
-      queries: {
-        orderByChild: 'likes'
-      },
-      then() {
-        this.setState({boardValue: this.state.params.boardName});
-      }
-    });
-
     base.syncState(`notes/${this.state.params.teamName}`, {
       context: this,
       state: 'boardList',
@@ -53,6 +41,18 @@ class TeamView extends React.Component {
         else {
           this.setState({boardsLoading: false});
         }
+      }
+    });
+
+    this.ref = base.syncState(`notes/${this.state.params.teamName}/${this.state.params.boardName}`, {
+      context: this,
+      state: 'notes',
+      asArray: true,
+      queries: {
+        orderByChild: 'likes'
+      },
+      then() {
+        this.setState({boardValue: this.state.params.boardName});
       }
     });
   }
@@ -153,7 +153,6 @@ class TeamView extends React.Component {
 
   renderTeamBoards(){
     return Object.keys(this.state.boardList).map((boardName) => {
-      debugger;
       var diff = Cookies.get(boardName) ? this.state.boardList[boardName].length - Cookies.get(boardName) : this.state.boardList[boardName].length;
       diff = diff < 0 ? 0 : diff;
       return <MenuItem
