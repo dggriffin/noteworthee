@@ -1,4 +1,3 @@
-import styles from 'styles/Note.css';
 import React from 'react';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
@@ -8,7 +7,6 @@ import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
 import HappyIcon from 'material-ui/svg-icons/social/mood';
 import SadIcon from 'material-ui/svg-icons/social/mood-bad';
-import Cookies from 'cookies-js';
 
 import Rebase from 're-base';
 const base = Rebase.createClass('https://noteworthyapp.firebaseio.com');
@@ -50,14 +48,14 @@ export default class Note extends React.Component {
   }
 
   handleLike() {
-    if (Cookies.get(this.state.id)) {
+    if (localStorage.getItem(this.state.id) === 'true') {
       this.setState({
         data: {
           ...this.state.data,
           likes: this.state.data.likes-1
         }
       });
-      Cookies.expire(this.state.id);
+      localStorage.setItem(this.state.id, false);
     }
     else {
       this.setState({
@@ -66,7 +64,7 @@ export default class Note extends React.Component {
           likes: this.state.data.likes+1
         }
       });
-      Cookies.set(this.state.id, true);
+      localStorage.setItem(this.state.id, true);
     }
   }
 
@@ -155,7 +153,7 @@ export default class Note extends React.Component {
         <CardActions>
           <FlatButton
             primary={true}
-            label={`${Cookies.get(this.state.id) ? 'Unlike' : 'Like'} (${this.state.data.likes})`}
+            label={`${localStorage.getItem(this.state.id) === 'true' ? 'Unlike' : 'Like'} (${this.state.data.likes})`}
             onClick={this.handleLike.bind(this)}
           />
           <FlatButton

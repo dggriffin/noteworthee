@@ -33,6 +33,7 @@ module.exports = {
       actions: `${defaultSettings.srcPath}/actions/`,
       assets: `${defaultSettings.distPath}/assets/`,
       components: `${defaultSettings.srcPath}/components/`,
+      containers: `${defaultSettings.srcPath}/containers/`,
       sources: `${defaultSettings.srcPath}/sources/`,
       stores: `${defaultSettings.srcPath}/stores/`,
       styles: `${defaultSettings.srcPath}/styles/`,

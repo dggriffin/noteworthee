@@ -1,59 +1,42 @@
 require('styles/index.css');
 import styles from 'styles/BoardSidebar.css'
 import React from 'react';
-import Rebase from 're-base';
 import { MenuItem } from 'material-ui';
-import { browserHistory, Link } from 'react-router';
-import Cookies from 'cookies-js';
+import { Link } from 'react-router';
 
-const base = Rebase.createClass('https://noteworthyapp.firebaseio.com');
+const defaultProps = {
+  boardList: [],
+  loading: true,
+  boardName: ''
+};
 
 class BoardSidebar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      boardValue: '',
-      boardsLoading: true
+      selectedBoard: this.props.boardName
     };
   }
 
-  componentDidMount() {
-    base.syncState(`notes/${this.state.params.teamName}`, {
-      context: this,
-      state: 'boardList',
-      then(data){
-        if (data) {
-          this.setState({boardsLoading: false});
-        }
-        else {
-          this.setState({boardsLoading: true});
-        }
-      }
-    });
+  handleBoardSelect(selectedBoard) {
+    this.setState({selectedBoard});
+    this.props.handleBoardSelect(selectedBoard);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({...nextProps});
-  }
-
-  handleBoardSelect(boardName) {
-    this.setState({boardValue: boardName});
-    base.removeBinding(this.ref);
-    browserHistory.push(`/${this.state.params.teamName}/${boardName}`);
-    this.setState({loading: true});
+  handleHomeClick(){
+    this.setState({selectedBoard: ''});
   }
 
   renderTeamBoards() {
-    return Object.keys(this.state.boardList).map((boardName) => {
-      var diff = Cookies.get(boardName) ? this.state.boardList[boardName].length - Cookies.get(boardName) : this.state.boardList[boardName].length;
+    return Object.keys(this.props.boardList).map((boardName) => {
+      var diff = localStorage.getItem(boardName) ? this.props.boardList[boardName].length - localStorage.getItem(boardName) : this.props.boardList[boardName].length;
       diff = diff < 0 ? 0 : diff;
-      return <MenuItem
-        onClick={this.handleBoardSelect.bind(this, boardName)}
-        key={boardName}
-        style={{backgroundColor: boardName === this.state.boardValue ? '#2D7288' : '', fontWeight: diff ? 500 : 100, color:'white', textAlign: 'center'}}>
-        {boardName}{`${diff ? ` (${diff})` : ''}`}
-      </MenuItem>;
-    })
+      return <div key={boardName} style={{cursor: 'pointer', backgroundColor: boardName === this.state.selectedBoard ? '#2D7288' : ''}}>
+          <MenuItem onClick={this.handleBoardSelect.bind(this, boardName)} style={{fontWeight: diff ? 500 : 100, color:'white', textAlign: 'center'}}>
+            {boardName}{`${diff ? ` (${diff})` : ''}`}
+          </MenuItem>
+      </div>;
+    });
   }
 
   render() {
@@ -61,11 +44,11 @@ class BoardSidebar extends React.Component {
       <div className={styles.boardList}>
         <div className={styles.boardListContent}>
           <div className={styles.boardListTitle}>
-            <Link style={{textDecoration: 'none', color: 'white'}} onClick={this.handleHomeClick.bind(this)} to={`/${this.state.params.teamName}`}>
-               {this.state.params.teamName}
+            <Link style={{textDecoration: 'none', color: 'white'}} onClick={this.handleHomeClick.bind(this)} to={`/${this.props.teamName}`}>
+               {this.props.teamName}
             </Link>
           </div>
-            <p style={{color:'white', textAlign: 'center'}}>Boards: </p>
+            <p style={{color:'white', textAlign: 'center'}}>Team Boards: </p>
             {this.state.boardsLoading ?
               <p style={{color:'white', textAlign: 'center', fontWeight: 100}}>Loading...</p>
            : this.renderTeamBoards()}
@@ -74,5 +57,7 @@ class BoardSidebar extends React.Component {
     );
   }
 }
+
+BoardSidebar.defaultProps = defaultProps;
 
 export default BoardSidebar;
