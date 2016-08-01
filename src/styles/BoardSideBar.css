@@ -23,6 +23,7 @@
 }
 
 .boardListContent {
+  flex-grow: 1;
 }
 
 .boardListTitle {
@@ -44,4 +45,16 @@
   color:#7BD1EE;
   text-align: center;
   font-weight: 100;
+}
+
+.footer {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.link {
+  color: white;
 }

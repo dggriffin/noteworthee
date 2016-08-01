@@ -60,7 +60,7 @@ class Noteboard extends React.Component {
     return (
       <Paper style={{width: '100%', marginLeft: 'auto', marginRight: 'auto', backgroundColor: '#f7f7f7'}}>
         <div className={styles.toolbar}>
-          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', flexWrap: 'wrap'}}>
+          <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
             <div style={{display: 'flex', alignItems: 'center'}}>
               <SortIcon color='#EF5A8F' style={{marginLeft: 0}} />
               <SelectField
