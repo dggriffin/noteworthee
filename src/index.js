@@ -1,3 +1,6 @@
+var injectTapEventPlugin = require("react-tap-event-plugin");
+injectTapEventPlugin();
+
 import 'core-js/fn/object/assign';
 import React from 'react';
 import ReactDOM from 'react-dom';

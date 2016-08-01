@@ -49,6 +49,20 @@ class NoteboardContainer extends React.Component {
     });
   }
 
+  addNote(){
+    this.setState({
+      notes: this.state.notes.concat([{
+        message: this.state.messageValue,
+        dateCreated: new Date().getTime(),
+        likes: 0,
+        comments: [],
+        mood: this.state.moodState,
+        key: `${this.state.notes.length}`
+      }]),
+      dialogOpen: false
+    });
+  }
+
   render() {
     return (
       <Noteboard

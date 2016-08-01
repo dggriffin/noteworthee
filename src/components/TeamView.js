@@ -4,7 +4,7 @@ import styles from 'styles/TeamView.css'
 import React from 'react';
 import Rebase from 're-base';
 import NoteboardContainer from 'containers/NoteboardContainer';
-import NoteDialog from 'components/NoteDialog';
+import NoteDialogContainer from 'containers/NoteDialogContainer';
 import BoardSidebarContainer from 'containers/BoardSidebarContainer';
 import { TextField, RaisedButton } from 'material-ui';
 import { browserHistory} from 'react-router';
@@ -16,11 +16,7 @@ class TeamView extends React.Component {
     super(props);
     this.state = {
       dialogOpen: false,
-      moodState: 'happy',
-      messageValue: '',
       boardValue: '',
-      showHappy: true,
-      showSad: true,
       ...props
     };
   }
@@ -29,51 +25,21 @@ class TeamView extends React.Component {
     this.setState({...nextProps});
   }
 
-  addNote(){
-    this.setState({
-      notes: this.state.notes.concat([{
-        message: this.state.messageValue,
-        dateCreated: new Date().getTime(),
-        likes: 0,
-        comments: [],
-        mood: this.state.moodState,
-        key: `${this.state.notes.length}`
-      }]),
-      dialogOpen: false
-    });
-  }
+  // handleArchiveClick(){
+  //   base.push(`archives/${this.state.params.teamName}/${this.state.params.boardName}/${new Date().toISOString().split('T')[0]}`, {
+  //     data: this.state.notes
+  //   });
+  //   this.setState({
+  //     notes: []
+  //   });
+  // }
 
-  handleArchiveClick(){
-    base.push(`archives/${this.state.params.teamName}/${this.state.params.boardName}/${new Date().toISOString().split('T')[0]}`, {
-      data: this.state.notes
-    });
-    this.setState({
-      notes: []
-    });
-  }
-
-  resetNotes(){
-    this.setState({
-      notes: []
-    });
-  }
-
-  handleDialogOpen(){
+  handleDialogOpen() {
     this.setState({dialogOpen: true});
   }
 
-  handleDialogClose(){
+  handleDialogClose() {
     this.setState({dialogOpen: false});
-  }
-
-  handleMessageChange(value){
-    this.setState({
-      messageValue: value
-    });
-  }
-
-  handleMoodChange(value){
-    this.setState({moodState: value});
   }
 
   handleBoardChange(event) {
@@ -104,7 +70,6 @@ class TeamView extends React.Component {
             this.state.params.boardName ?
             <NoteboardContainer
               handleDialogOpen={this.handleDialogOpen.bind(this)}
-              handleArchiveClick={this.handleArchiveClick.bind(this)}
               teamName={this.state.params.teamName}
               boardName={this.state.params.boardName}
             /> :
@@ -130,12 +95,11 @@ class TeamView extends React.Component {
               </div>
             </div>
           }
-          <NoteDialog
+          <NoteDialogContainer
             dialogOpen={this.state.dialogOpen}
-            handleAddNote={this.addNote.bind(this)}
             handleDialogClose={this.handleDialogClose.bind(this)}
-            handleMessageChange={this.handleMessageChange.bind(this)}
-            handleMoodChange={this.handleMoodChange.bind(this)}
+            teamName={this.state.params.teamName}
+            boardName={this.state.params.boardName}
           />
         </div>
     );

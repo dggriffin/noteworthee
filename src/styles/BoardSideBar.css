@@ -5,6 +5,13 @@
   display: box;
 }
 
+
+@media (max-width: 700px) {
+  .visibility {
+    display: none !important;
+  }
+}
+
 .boardList {
   width: 30%;
   max-width: 220px;
@@ -12,6 +19,7 @@
   display: flex;
   flex-direction: column;
   padding-top: 1em;
+  composes: visibility;
 }
 
 .boardListContent {

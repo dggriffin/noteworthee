@@ -11,38 +11,37 @@ export default class NoteDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ...props,
       messageValue: '',
-      moodState: 'happy'
+      moodState: 'happy',
+      dialogOpen: this.props.dialogOpen
     };
   }
 
-  handleDialogClose(){
+  handleDialogClose() {
     this.setState({dialogOpen: false});
-    this.state.handleDialogClose();
+    this.props.handleDialogClose();
   }
 
-  componentWillReceiveProps(nextProps){
-    this.setState({...nextProps});
+  componentWillReceiveProps(nextProps) {
+    this.setState({dialogOpen: nextProps.dialogOpen});
   }
 
-  handleMessageChange(event){
+  handleMessageChange(event) {
     this.setState({
       messageValue: event.target.value
     });
-    this.state.handleMessageChange(event.target.value);
   }
 
-  handleMoodChange(event, value){
+  handleMoodChange(event, value) {
     this.setState({moodState: value});
-    this.state.handleMoodChange(value);
   }
 
-  handleAddNote(){
+  handleAddNote() {
     this.setState({
       dialogOpen: false
     });
-    this.state.handleAddNote();
+    this.props.handleAddNote(this.state.messageValue, this.state.moodState);
+    this.setState({messageValue: ''});
   }
 
   render() {

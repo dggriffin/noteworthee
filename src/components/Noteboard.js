@@ -1,8 +1,10 @@
 import styles from 'styles/Noteboard.css';
 import React from 'react';
 import FlipMove from 'react-flip-move';
-import Note from 'components/Note'
-import { Paper, FlatButton, RaisedButton, CircularProgress } from 'material-ui';
+import NoteContainer from 'containers/NoteContainer'
+import { Paper, FlatButton, CircularProgress, SelectField, MenuItem, FloatingActionButton } from 'material-ui';
+import SortIcon from 'material-ui/svg-icons/content/sort';
+import ContentAddIcon from 'material-ui/svg-icons/content/add';
 import _ from 'underscore';
 
 const defaultProps = {
@@ -18,14 +20,15 @@ class Noteboard extends React.Component {
     super(props);
     this.state = {
       showSad: true,
-      showHappy: true
+      showHappy: true,
+      sortValue: 'dateCreated'
     };
   }
 
   renderNotes() {
     return this.getFilteredNotes().map( note =>
       <div key={`${note.dateCreated}-${this.props.teamName}-${this.props.boardName}`}>
-        <Note id={`${note.dateCreated}-${this.props.teamName}-${this.props.boardName}`} index={note.key} team={this.props.teamName} board={this.props.boardName} />
+        <NoteContainer id={`${note.dateCreated}-${this.props.teamName}-${this.props.boardName}`} index={note.key} team={this.props.teamName} board={this.props.boardName} />
       </div>
     );
   }
@@ -38,22 +41,37 @@ class Noteboard extends React.Component {
         case 'sad':
           return this.state.showSad;
       }
-    }), 'likes').reverse();
+    }), this.state.sortValue).reverse();
   }
 
-  handleToggleHappy(){
+  handleToggleHappy() {
     this.setState({showHappy: !this.state.showHappy});
   }
 
-  handleToggleSad(){
+  handleToggleSad() {
     this.setState({showSad: !this.state.showSad});
+  }
+
+  handleSortChange(event, index, sortValue) {
+    this.setState({sortValue});
   }
 
   render() {
     return (
       <Paper style={{width: '100%', marginLeft: 'auto', marginRight: 'auto', backgroundColor: '#f7f7f7'}}>
         <div className={styles.toolbar}>
-          <div style={{display: 'flex'}}>
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', flexWrap: 'wrap'}}>
+            <div style={{display: 'flex', alignItems: 'center'}}>
+              <SortIcon color='#EF5A8F' style={{marginLeft: 0}} />
+              <SelectField
+                value={this.state.sortValue}
+                onChange={this.handleSortChange.bind(this)}
+                style={{marginLeft: 5, width: 110}}
+              >
+                <MenuItem value={'dateCreated'} primaryText='Recent' />
+                <MenuItem value={'likes'} primaryText='Likes' />
+              </SelectField>
+            </div>
             <FlatButton
               label={this.state.showHappy ? 'Hide Happy' : 'Show Happy'}
               secondary={true}
@@ -63,15 +81,12 @@ class Noteboard extends React.Component {
               secondary={true}
               onClick={this.handleToggleSad.bind(this)} />
           </div>
-          <div style={{display: 'flex'}}>
-            <FlatButton
-              label="Archive"
+          <div className={styles.floatingActionButton}>
+            <FloatingActionButton
               secondary={true}
-              onClick={this.props.handleArchiveClick.bind(this)} />
-            <RaisedButton
-              label="+ Add Note"
-              secondary={true}
-              onClick={this.props.handleDialogOpen.bind(this)} />
+              onClick={this.props.handleDialogOpen.bind(this)}>
+              <ContentAddIcon/>
+            </FloatingActionButton>
           </div>
         </div>
         { this.props.loading ? <div style={{height: '82vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}><CircularProgress size={3}/></div> :

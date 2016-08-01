@@ -8,33 +8,13 @@ import Divider from 'material-ui/Divider';
 import HappyIcon from 'material-ui/svg-icons/social/mood';
 import SadIcon from 'material-ui/svg-icons/social/mood-bad';
 
-import Rebase from 're-base';
-const base = Rebase.createClass('https://noteworthyapp.firebaseio.com');
-
-export default class Note extends React.Component {
+class Note extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       expanded: false,
-      commentValue: '',
-      data: {
-        comments: [],
-        likes: 0
-      },
-      ...props
+      commentValue: ''
     };
-  }
-
-  componentDidMount(){
-    this.ref = base.syncState(`notes/${this.state.team}/${this.state.board}/${this.state.index}`, {
-      context: this,
-      state: 'data',
-      asArray: false
-    });
-  }
-
-  componentWillUnmount(){
-    base.removeBinding(this.ref);
   }
 
   handleToggleComments(){
@@ -48,28 +28,11 @@ export default class Note extends React.Component {
   }
 
   handleLike() {
-    if (localStorage.getItem(this.state.id) === 'true') {
-      this.setState({
-        data: {
-          ...this.state.data,
-          likes: this.state.data.likes-1
-        }
-      });
-      localStorage.setItem(this.state.id, false);
-    }
-    else {
-      this.setState({
-        data: {
-          ...this.state.data,
-          likes: this.state.data.likes+1
-        }
-      });
-      localStorage.setItem(this.state.id, true);
-    }
+    this.props.handleLike();
   }
 
-  getElapsedTime(){
-    var date = new Date(this.state.data.dateCreated);
+  getElapsedTime() {
+    var date = new Date(this.props.dateCreated);
     var seconds = Math.floor((new Date() - date) / 1000);
 
     var interval = Math.floor(seconds / 31536000);
@@ -96,21 +59,15 @@ export default class Note extends React.Component {
     return Math.floor(seconds) + ' seconds';
   }
 
-  handleSubmitComment(){
-    let comments = this.state.data.comments ? this.state.data.comments : [];
-    this.setState({
-      data: {
-        ...this.state.data,
-        comments: comments.concat([this.state.commentValue])
-      }
-    });
+  handleSubmitComment() {
+    this.props.handleSubmitComment(this.state.commentValue);
     this.setState({commentValue: ''});
   }
 
-  renderCommentSection(){
+  renderCommentSection() {
     let comments = [];
-    if (this.state.data.comments) {
-      comments = this.state.data.comments.map( comment =>
+    if (this.props.comments) {
+      comments = this.props.comments.map( comment =>
         [
           <MenuItem key={comment}>
             <p style={{whiteSpace: 'normal', overflow: 'hidden'}}>
@@ -143,8 +100,8 @@ export default class Note extends React.Component {
         style={{maxWidth: 300, margin: '.5em'}}
         expandable={true}>
         <CardHeader
-          title={this.state.data.message}
-          avatar={this.state.data.mood === 'happy' ? <HappyIcon style={{fill: '#7BD1EE', width: 50, height: 50}}/> : <SadIcon style={{fill: '#EF5A8F', width: 50, height: 50}}/>}
+          title={this.props.message}
+          avatar={this.props.mood === 'happy' ? <HappyIcon style={{fill: '#7BD1EE', width: 50, height: 50}}/> : <SadIcon style={{fill: '#EF5A8F', width: 50, height: 50}}/>}
           actAsExpander={true}
           titleColor={'#646464'}
           subtitle={`${this.getElapsedTime()} ago`}
@@ -153,12 +110,12 @@ export default class Note extends React.Component {
         <CardActions>
           <FlatButton
             primary={true}
-            label={`${localStorage.getItem(this.state.id) === 'true' ? 'Unlike' : 'Like'} (${this.state.data.likes})`}
+            label={`${localStorage.getItem(this.props.id) === 'true' ? 'Unlike' : 'Like'} (${this.props.likes})`}
             onClick={this.handleLike.bind(this)}
           />
           <FlatButton
             secondary={true}
-            label={` ${this.state.expanded ? 'Hide Comments' : 'Comment'} (${this.state.data.comments ? this.state.data.comments.length : '0'})`}
+            label={` ${this.state.expanded ? 'Hide Comments' : 'Comment'} (${this.props.comments ? this.props.comments.length : '0'})`}
             onClick={this.handleToggleComments.bind(this)}
           />
         </CardActions>
