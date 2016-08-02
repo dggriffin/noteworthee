@@ -8,7 +8,8 @@
   align-content: flex-start;;
   align-items: flex-start;
   padding: 2em;
-  min-height: 83vh;
+  height: 83vh;
+  overflow-y: scroll;
 }
 
 .toolbar {

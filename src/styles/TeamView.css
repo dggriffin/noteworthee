@@ -1,8 +1,9 @@
 .teamContent {
   display: flex;
   flex-direction: row;
-  min-height: 100vh;
+  height: 100vh;
   display: box;
+  overflow-y: hidden;
 }
 
 .boardList {
