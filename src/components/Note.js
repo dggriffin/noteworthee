@@ -7,6 +7,7 @@ import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
 import HappyIcon from 'material-ui/svg-icons/social/mood';
 import SadIcon from 'material-ui/svg-icons/social/mood-bad';
+import LinkIcon from 'material-ui/svg-icons/content/link';
 
 class Note extends React.Component {
   constructor(props) {
@@ -93,6 +94,28 @@ class Note extends React.Component {
     ];
   }
 
+  renderUrls() {
+    let urlList = this.props.urlList;
+    if (urlList && urlList.length) {
+      return <CardText>
+        <div style={{display: 'flex', flexDirection:'column'}}>
+          <span style={{display: 'flex', color: 'grey', paddingBottom: 10}}>{`Links (${urlList.length})`}</span>
+          {urlList.map((url) => {
+            if (!url.match(/^[a-zA-Z]+:\/\//))
+            {
+                url = 'http://' + url;
+            }
+            let displayUrl = url;
+            if (displayUrl.length > 30) {
+              displayUrl = displayUrl.substr(0, 27) + '...';
+            }
+            return <MenuItem innerDivStyle={{paddingLeft: 35}} leftIcon={<LinkIcon style={{padding: 0, marginLeft: 0}}/>}><a target='_blank' href={url}>{displayUrl}</a></MenuItem>
+          })}
+        </div>
+      </CardText>
+    }
+  }
+
   render() {
     return (
       <Card
@@ -100,13 +123,17 @@ class Note extends React.Component {
         style={{maxWidth: 300, margin: '.5em'}}
         expandable={true}>
         <CardHeader
-          title={this.props.message}
+          title='Anonymous'
           avatar={this.props.mood === 'happy' ? <HappyIcon style={{fill: '#7BD1EE', width: 50, height: 50}}/> : <SadIcon style={{fill: '#EF5A8F', width: 50, height: 50}}/>}
           actAsExpander={true}
           titleColor={'#646464'}
           subtitle={`${this.getElapsedTime()} ago`}
           subtitleStyle={{paddingTop: '1em'}}
           />
+        <CardText>
+          {this.props.message}
+        </CardText>
+        {this.renderUrls()}
         <CardActions>
           <FlatButton
             primary={true}

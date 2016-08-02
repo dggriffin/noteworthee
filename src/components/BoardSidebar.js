@@ -19,6 +19,31 @@ class BoardSidebar extends React.Component {
     };
   }
 
+  // updateDimensions() {
+  //   let w = window,
+  //       d = document,
+  //       documentElement = d.documentElement,
+  //       body = d.getElementsByTagName('body')[0],
+  //       width = w.innerWidth || documentElement.clientWidth || body.clientWidth;
+  //
+  //   if (width <= 700) {
+  //
+  //   }
+  //
+  // }
+  //
+  // componentWillMount() {
+  //     this.updateDimensions();
+  // }
+  //
+  // componentDidMount() {
+  //     window.addEventListener('resize', this.updateDimensions.bind(this));
+  // }
+  //
+  // componentWillUnmount() {
+  //     window.removeEventListener('resize', this.updateDimensions.bind(this));
+  // }
+
   handleBoardSelect(selectedBoard) {
     this.setState({selectedBoard});
     this.props.handleBoardSelect(selectedBoard);
@@ -35,7 +60,7 @@ class BoardSidebar extends React.Component {
       return <div key={boardName} style={{cursor: 'pointer', backgroundColor: boardName === this.state.selectedBoard ? '#EF5A8F' : ''}}>
           <MenuItem onClick={this.handleBoardSelect.bind(this, boardName)} style={{fontWeight: diff ? 500 : 300, color:'white', textAlign: 'center'}}>
             <div style={{display: 'flex', alignItems: 'center'}}>
-            <BulletIcon color='white'/> {boardName}{`${diff ? ` (${diff})` : ''}`}
+              <BulletIcon color='white' style={{marginRight: 10}}/> {boardName}{`${diff ? ` (${diff})` : ''}`}
             </div>
           </MenuItem>
       </div>;

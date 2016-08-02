@@ -9,14 +9,15 @@ export default class NoteDialogContainer extends React.Component {
     super(props);
   }
 
-  addNote(message, moodState) {
+  addNote(newNote) {
     base.push(`teams/${this.props.teamName}/${this.props.boardName}`, {
       data: {
-          message: message,
+          message: newNote.messageValue,
           dateCreated: new Date().getTime(),
           likes: 0,
           comments: [],
-          mood: moodState
+          mood: newNote.moodState,
+          urlList: newNote.urlList
       }
     });
     this.props.handleDialogClose();
