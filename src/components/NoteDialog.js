@@ -14,7 +14,8 @@ export default class NoteDialog extends React.Component {
     this.state = {
       messageValue: '',
       moodState: 'happy',
-      dialogOpen: this.props.dialogOpen
+      dialogOpen: this.props.dialogOpen,
+      urlList: []
     };
   }
 
@@ -46,10 +47,11 @@ export default class NoteDialog extends React.Component {
     this.props.handleAddNote(newNote);
 
     this.setState({
-      dialogOpen: false
+      dialogOpen: false,
+      moodState: 'happy',
+      messageValue: '',
+      urlList: []
     });
-    
-    this.setState({messageValue: ''});
   }
 
   handleUrlChange(urlList) {

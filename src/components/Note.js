@@ -8,6 +8,8 @@ import Divider from 'material-ui/Divider';
 import HappyIcon from 'material-ui/svg-icons/social/mood';
 import SadIcon from 'material-ui/svg-icons/social/mood-bad';
 import LinkIcon from 'material-ui/svg-icons/content/link';
+import ThumbIcon from 'material-ui/svg-icons/action/thumb-up';
+import CommentIcon from 'material-ui/svg-icons/communication/comment';
 
 class Note extends React.Component {
   constructor(props) {
@@ -120,7 +122,7 @@ class Note extends React.Component {
     return (
       <Card
         expanded={this.state.expanded}
-        style={{maxWidth: 300, margin: '.5em'}}
+        style={{maxWidth: 325, margin: '.5em'}}
         expandable={true}>
         <CardHeader
           title='Anonymous'
@@ -137,11 +139,13 @@ class Note extends React.Component {
         <CardActions>
           <FlatButton
             primary={true}
+            icon={<ThumbIcon/>}
             label={`${localStorage.getItem(this.props.id) === 'true' ? 'Unlike' : 'Like'} (${this.props.likes})`}
             onClick={this.handleLike.bind(this)}
           />
           <FlatButton
             secondary={true}
+            icon={<CommentIcon/>}
             label={` ${this.state.expanded ? 'Hide Comments' : 'Comment'} (${this.props.comments ? this.props.comments.length : '0'})`}
             onClick={this.handleToggleComments.bind(this)}
           />

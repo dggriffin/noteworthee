@@ -64,7 +64,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
     "cookies-js": "^1.2.2",
     "core-js": "^2.0.0",
-    "material-ui": "^0.15.2",
+    "material-ui": "^0.15.3",
     "normalize.css": "^4.0.0",
     "re-base": "^1.5.1",
     "react": "^15.0.0",

@@ -36,3 +36,13 @@
   position: fixed;
   composes: flipButton;
 }
+
+.boardName {
+  font-size: 1.5em;
+  font-weight: 600;
+  color: #979797;
+}
+
+.lastPost {
+  color: #dad4d4;
+}

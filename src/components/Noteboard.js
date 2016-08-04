@@ -2,8 +2,11 @@ import styles from 'styles/Noteboard.css';
 import React from 'react';
 import FlipMove from 'react-flip-move';
 import NoteContainer from 'containers/NoteContainer'
-import { Paper, FlatButton, CircularProgress, SelectField, MenuItem, FloatingActionButton } from 'material-ui';
+import { Paper, CircularProgress, SelectField, MenuItem, FloatingActionButton, IconButton } from 'material-ui';
+import HappyIcon from 'material-ui/svg-icons/social/mood';
+import SadIcon from 'material-ui/svg-icons/social/mood-bad';
 import SortIcon from 'material-ui/svg-icons/content/sort';
+import MoreDetailsIcon from 'material-ui/svg-icons/action/chrome-reader-mode';
 import ContentAddIcon from 'material-ui/svg-icons/content/add';
 import _ from 'underscore';
 
@@ -21,7 +24,7 @@ class Noteboard extends React.Component {
     this.state = {
       showSad: true,
       showHappy: true,
-      sortValue: 'dateCreated'
+      sortValue: 'likes'
     };
   }
 
@@ -56,30 +59,77 @@ class Noteboard extends React.Component {
     this.setState({sortValue});
   }
 
+  getLatestPostTime() {
+    return this.getElapsedTime(_.max(this.props.notes, 'dateCreated').dateCreated);
+  }
+
+  getElapsedTime(time) {
+    var date = new Date(time);
+    var seconds = Math.floor((new Date() - date) / 1000);
+
+    var interval = Math.floor(seconds / 31536000);
+
+    if (interval > 1) {
+      return interval + ' years';
+    }
+    interval = Math.floor(seconds / 2592000);
+    if (interval > 1) {
+      return interval + ' months';
+    }
+    interval = Math.floor(seconds / 86400);
+    if (interval > 1) {
+      return interval + ' days';
+    }
+    interval = Math.floor(seconds / 3600);
+    if (interval > 1) {
+      return interval + ' hours';
+    }
+    interval = Math.floor(seconds / 60);
+    if (interval > 1) {
+      return interval + ' minutes';
+    }
+    return Math.floor(seconds) + ' seconds';
+  }
+
   render() {
     return (
       <Paper style={{width: '100%', marginLeft: 'auto', marginRight: 'auto', backgroundColor: '#f7f7f7'}}>
         <div className={styles.toolbar}>
-          <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
-            <div style={{display: 'flex', alignItems: 'center'}}>
-              <SortIcon color='#EF5A8F' style={{marginLeft: 0}} />
-              <SelectField
-                value={this.state.sortValue}
-                onChange={this.handleSortChange.bind(this)}
-                style={{marginLeft: 5, width: 110}}
-              >
-                <MenuItem value={'dateCreated'} primaryText='Recent' />
-                <MenuItem value={'likes'} primaryText='Likes' />
-              </SelectField>
+          <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
+            <div style={{display: 'flex', flexDirection:'column', justifyContent:'center'}}>
+              <span className={styles.boardName}> {this.props.boardName}</span>
+              <span className={styles.lastPost}> Last Post: {this.getLatestPostTime()} ago</span>
             </div>
-            <FlatButton
-              label={this.state.showHappy ? 'Hide Happy' : 'Show Happy'}
-              secondary={true}
-              onClick={this.handleToggleHappy.bind(this)} />
-            <FlatButton
-              label={this.state.showSad ? 'Hide Sad' : 'Show Sad'}
-              secondary={true}
-              onClick={this.handleToggleSad.bind(this)} />
+            <span style={{display: 'flex'}}>
+              <div style={{display: 'flex', alignItems: 'center'}}>
+                <SortIcon color='#EF5A8F' style={{marginLeft: 0}} />
+                <SelectField
+                  value={this.state.sortValue}
+                  onChange={this.handleSortChange.bind(this)}
+                  style={{marginLeft: 5, width: 110}}
+                >
+                  <MenuItem value={'likes'} primaryText='Likes' />
+                  <MenuItem value={'dateCreated'} primaryText='Recent' />
+                </SelectField>
+              </div>
+              <IconButton
+                  tooltip="Toggle Happy Notes"
+                  tooltipPosition="top-center"
+                  onClick={this.handleToggleHappy.bind(this)} >
+                <HappyIcon color={this.state.showHappy ? '#EF5A8F' : '#dedede'}/>
+              </IconButton>
+              <IconButton
+                  tooltip="Toggle Sad Notes"
+                  tooltipPosition="top-center"
+                  onClick={this.handleToggleSad.bind(this)} >
+                <SadIcon color={this.state.showSad ? '#EF5A8F' : '#dedede'}/>
+              </IconButton>
+              <IconButton
+                  tooltip="Show Tag Filters"
+                  tooltipPosition="top-center" >
+                <MoreDetailsIcon color='#646464'/>
+              </IconButton>
+            </span>
           </div>
           <div className={styles.floatingActionButton}>
             <FloatingActionButton
