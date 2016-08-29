@@ -19,31 +19,6 @@ class BoardSidebar extends React.Component {
     };
   }
 
-  // updateDimensions() {
-  //   let w = window,
-  //       d = document,
-  //       documentElement = d.documentElement,
-  //       body = d.getElementsByTagName('body')[0],
-  //       width = w.innerWidth || documentElement.clientWidth || body.clientWidth;
-  //
-  //   if (width <= 700) {
-  //
-  //   }
-  //
-  // }
-  //
-  // componentWillMount() {
-  //     this.updateDimensions();
-  // }
-  //
-  // componentDidMount() {
-  //     window.addEventListener('resize', this.updateDimensions.bind(this));
-  // }
-  //
-  // componentWillUnmount() {
-  //     window.removeEventListener('resize', this.updateDimensions.bind(this));
-  // }
-
   handleBoardSelect(selectedBoard) {
     this.setState({selectedBoard});
     this.props.handleBoardSelect(selectedBoard);

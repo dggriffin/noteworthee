@@ -47,16 +47,10 @@ class TeamView extends React.Component {
   }
 
   handleBoardSubmit(){
-     base.removeBinding(this.ref);
-     browserHistory.push(`/${this.state.params.teamName}/${this.state.boardValue}`);
-     this.ref = base.syncState(`teams/${this.state.params.teamName}/${this.state.boardValue}`, {
-       context: this,
-       state: 'notes',
-       asArray: true,
-       queries: {
-         orderByChild: 'likes'
-       }
-     });
+    browserHistory.push(`/${this.state.params.teamName}/${this.state.boardValue}`);
+    base.push(`teams/${this.state.params.teamName}/${this.state.boardValue}`, {
+      data: true
+    });
   }
 
   render() {

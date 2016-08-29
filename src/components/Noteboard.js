@@ -31,7 +31,12 @@ class Noteboard extends React.Component {
   renderNotes() {
     return this.getFilteredNotes().map( note =>
       <div key={`${note.dateCreated}-${this.props.teamName}-${this.props.boardName}`}>
-        <NoteContainer id={`${note.dateCreated}-${this.props.teamName}-${this.props.boardName}`} index={note.key} team={this.props.teamName} board={this.props.boardName} />
+        <NoteContainer
+          id={`${note.dateCreated}-${this.props.teamName}-${this.props.boardName}`}
+          index={note.key}
+          team={this.props.teamName}
+          board={this.props.boardName}
+        />
       </div>
     );
   }
