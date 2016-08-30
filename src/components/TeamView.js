@@ -58,6 +58,7 @@ class TeamView extends React.Component {
         }
       }
     });
+    this.setState({boardValue: ''});
   }
 
   render() {
