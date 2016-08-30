@@ -48,8 +48,15 @@ class TeamView extends React.Component {
 
   handleBoardSubmit(){
     browserHistory.push(`/${this.state.params.teamName}/${this.state.boardValue}`);
-    base.push(`teams/${this.state.params.teamName}/${this.state.boardValue}`, {
-      data: true
+    base.fetch(`teams/${this.state.params.teamName}/${this.state.boardValue}`, {
+      context: this,
+      then(data) {
+        if (!data) {
+          base.push(`teams/${this.state.params.teamName}/${this.state.boardValue}`, {
+            data: true
+          });
+        }
+      }
     });
   }
 
@@ -58,7 +65,7 @@ class TeamView extends React.Component {
         <div className={styles.teamContent}>
           <BoardSidebarContainer
             teamName={this.state.params.teamName}
-            boardName={this.state.params.boardName}
+            boardName={this.state.boardValue || this.state.params.boardName}
           />
           {
             this.state.params.boardName ?

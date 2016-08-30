@@ -19,6 +19,12 @@ class BoardSidebar extends React.Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      selectedBoard: nextProps.boardName
+    });
+  }
+
   handleBoardSelect(selectedBoard) {
     this.setState({selectedBoard});
     this.props.handleBoardSelect(selectedBoard);
