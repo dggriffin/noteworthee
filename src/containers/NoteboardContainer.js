@@ -16,6 +16,11 @@ class NoteboardContainer extends React.Component {
     this.mountNoteList(this.props.boardName);
   }
 
+  componentWillUnmount(){
+    base.removeBinding(this.ref);
+  }
+
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.boardName !== this.props.boardName) {
       base.removeBinding(this.ref);
