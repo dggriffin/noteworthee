@@ -46,3 +46,14 @@
 .lastPost {
   color: #dad4d4;
 }
+
+.noNotes {
+  font-size: 2em;
+  color: #979797;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30%;
+  text-align: center;
+}

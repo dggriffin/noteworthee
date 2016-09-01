@@ -13,6 +13,7 @@ export default class NoteDialog extends React.Component {
     super(props);
     this.state = {
       messageValue: '',
+      messageError: '',
       moodState: 'happy',
       dialogOpen: this.props.dialogOpen,
       urlList: []
@@ -20,12 +21,16 @@ export default class NoteDialog extends React.Component {
   }
 
   handleDialogClose() {
-    this.setState({dialogOpen: false});
+    this.setState({dialogOpen: false, messageValue: '', messageError: ''});
     this.props.handleDialogClose();
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({dialogOpen: nextProps.dialogOpen});
+  }
+
+  componentWillUnmount() {
+    this.setState({messageValue: '', messageError: ''});
   }
 
   handleMessageChange(event) {
@@ -39,6 +44,9 @@ export default class NoteDialog extends React.Component {
   }
 
   handleAddNote() {
+    if (!this.validateDialog()) {
+      return;
+    }
     let newNote = {
       messageValue: this.state.messageValue,
       moodState: this.state.moodState,
@@ -52,6 +60,12 @@ export default class NoteDialog extends React.Component {
       messageValue: '',
       urlList: []
     });
+  }
+
+  validateDialog() {
+    if (!this.state.messageValue.trim().length > 0) {
+        this.setState({messageError: 'Message field can\'t be empty!'})
+    }
   }
 
   handleUrlChange(urlList) {
@@ -72,7 +86,6 @@ export default class NoteDialog extends React.Component {
       <FlatButton
         label="Submit"
         primary={true}
-        keyboardFocused={true}
         onClick={this.handleAddNote.bind(this)}
         />
 
@@ -92,6 +105,7 @@ export default class NoteDialog extends React.Component {
           style={{width:'100%'}}
           value={this.state.messageValue}
           onChange={this.handleMessageChange.bind(this)}
+          errorText={this.state.messageError}
           />
 
         <AddLink handleUrlChange={this.handleUrlChange.bind(this)}/>
@@ -111,7 +125,7 @@ export default class NoteDialog extends React.Component {
           <RadioButton
             value="happy"
             checkedIcon={<HappyIcon/>}
-            uncheckedIcon={<HappyIconBorder />}
+            uncheckedIcon={<HappyIconBorder/>}
             iconStyle={{width: 100, height: 100}}
             style={{width: 'auto'}}
           />

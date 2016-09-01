@@ -73,7 +73,7 @@ class Note extends React.Component {
       comments = this.props.comments.map( comment =>
         [
           <MenuItem key={comment}>
-            <p style={{whiteSpace: 'normal', overflow: 'hidden'}}>
+            <p style={{whiteSpace: 'normal', overflow: 'hidden', lineHeight: 'normal'}}>
               {comment}
             </p>
           </MenuItem>,

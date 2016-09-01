@@ -29,7 +29,11 @@ class Noteboard extends React.Component {
   }
 
   renderNotes() {
-    return this.getFilteredNotes().map( note =>
+    let notes = this.getFilteredNotes();
+    if (!notes.length) {
+       return <div className={styles.noNotes}> No notes to display! </div>
+    }
+    return notes.map( note =>
       <div key={`${note.dateCreated}-${this.props.teamName}-${this.props.boardName}`}>
         <NoteContainer
           id={`${note.dateCreated}-${this.props.teamName}-${this.props.boardName}`}
