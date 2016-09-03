@@ -1,4 +1,4 @@
-# noteworthee | [Beta Demo](http://noteworthee.io/test)
+# noteworthee | [Beta Demo](http://noteworthee.io/demo)
 
 **noteworthee** is a simple web-app where teams can create noteboards and leave quick, anonymous notes, making it a great way to gather ideas and collect anonymous feedback.
 
