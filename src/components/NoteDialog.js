@@ -65,7 +65,9 @@ export default class NoteDialog extends React.Component {
   validateDialog() {
     if (!this.state.messageValue.trim().length > 0) {
         this.setState({messageError: 'Message field can\'t be empty!'})
+        return false;
     }
+    return true;
   }
 
   handleUrlChange(urlList) {
