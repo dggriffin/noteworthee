@@ -8,6 +8,7 @@ You can create a new noteworthee for your team by simple navigating to:
 ```
 http://noteworthee.io/TEAM_NAME_HERE
 ```
+![Navigating to a new team](https://media.giphy.com/media/l2Sq80fa2gwfR99Ic/giphy.gif)
 
 ## Creating boards
 Teams can then create infinitely many boards for any topic of their choosing.
@@ -27,7 +28,7 @@ Now anyone with the url to your board can post a completely anonymous note, with
 
 Simply click on the ```(+)``` symbol to post your own note:
 
-![Creating a board!](https://media.giphy.com/media/26ufpVuskmKynTkrK/giphy.gif)
+![Creating a note!](https://media.giphy.com/media/26ufpVuskmKynTkrK/giphy.gif)
 
 And that's pretty much it! Users can also anonymous like/comment on individual notes.
 
