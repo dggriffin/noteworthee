@@ -78,22 +78,23 @@ class TeamView extends React.Component {
             <div className={styles.noBoard}>
               Welcome to the <b style={{color: '#EF5A8F'}}>{this.state.params.teamName} noteworthee!</b>
               <br/>
-              Create a board and get jotting!
-              <div>
-                <TextField
-                  floatingLabelText="Enter Board Name"
-                  value={this.state.boardValue}
-                  onChange={this.handleBoardChange.bind(this)}
-                  style={{fontWeight: '500'}}
-                />
-                <RaisedButton
-                  secondary={true}
-                  label='Go!'
-                  style={{height: '100%'}}
-                  labelStyle={{height:'100%', fontSize: '1em'}}
-                  onClick={this.handleBoardSubmit.bind(this)}
-                />
-
+              Create a board!
+              <div className={styles.boardCreatorRow}>
+                <div className={styles.boardCreatorTextField}>
+                  <TextField
+                    floatingLabelText="Enter Board Name"
+                    value={this.state.boardValue}
+                    onChange={this.handleBoardChange.bind(this)}
+                    style={{fontWeight: '500'}}
+                  />
+                </div>
+                  <RaisedButton
+                    secondary={true}
+                    label='Go!'
+                    style={{height: '100%'}}
+                    labelStyle={{height:'100%', fontSize: '1.5em'}}
+                    onClick={this.handleBoardSubmit.bind(this)}
+                  />
               </div>
             </div>
           }

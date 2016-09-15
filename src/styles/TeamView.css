@@ -36,5 +36,22 @@
   padding: 1em;
   color:#7BD1EE;
   text-align: center;
-  font-weight: 100;
+  font-weight: 500;
+}
+
+.boardCreatorRow {
+  display: flex;
+  align-items: center;
+  background-color: #d2c7c7;
+  padding: 15px;
+  border-radius: 15px;
+  flex-wrap: wrap;
+}
+
+.boardCreatorTextField {
+  background-color: white;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin-right: 15px;
 }

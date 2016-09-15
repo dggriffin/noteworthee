@@ -39,9 +39,13 @@ class BoardSidebar extends React.Component {
       var diff = localStorage.getItem(boardName) ? this.props.boardList[boardName].length - localStorage.getItem(boardName) : this.props.boardList[boardName].length;
       diff = diff < 0 ? 0 : diff;
       return <div key={boardName} style={{cursor: 'pointer', backgroundColor: boardName === this.state.selectedBoard ? '#EF5A8F' : ''}}>
-          <MenuItem onClick={this.handleBoardSelect.bind(this, boardName)} style={{fontWeight: diff ? 500 : 300, color:'white', textAlign: 'center'}}>
+          <MenuItem
+            onClick={this.handleBoardSelect.bind(this, boardName)}
+            style={{fontWeight: diff ? 500 : 500, color: boardName === this.state.selectedBoard ? 'white' : '#cae8fb'}}
+            innerDivStyle={{lineHeight: 2, paddingLeft: 25}}
+            >
             <div style={{display: 'flex', alignItems: 'center'}}>
-              <BulletIcon color='white' style={{marginRight: 10}}/> {boardName}{`${diff ? ` (${diff})` : ''}`}
+              # {boardName}{`${diff ? ` (${diff})` : ''}`}
             </div>
           </MenuItem>
       </div>;
@@ -57,7 +61,7 @@ class BoardSidebar extends React.Component {
                {this.props.teamName}
             </Link>
           </div>
-            <p style={{color:'white', textAlign: 'center', fontWeight: 500}}>Team Boards</p>
+            <p style={{color:'#cae8fb',  fontWeight: 500, marginBottom: 5, paddingLeft: 20}}>BOARDS</p>
             {this.state.boardsLoading ?
               <p style={{color:'white', textAlign: 'center', fontWeight: 100}}>Loading...</p>
            : this.renderTeamBoards()}

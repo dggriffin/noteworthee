@@ -106,7 +106,7 @@ class Noteboard extends React.Component {
         <div className={styles.toolbar}>
           <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
             <div style={{display: 'flex', flexDirection:'column', justifyContent:'center'}}>
-              <span className={styles.boardName}> {this.props.boardName}</span>
+              <span className={styles.boardName}> #{this.props.boardName}</span>
               <span className={styles.lastPost}> Last Post: {this.getLatestPostTime()} ago</span>
             </div>
             <span style={{display: 'flex'}}>
