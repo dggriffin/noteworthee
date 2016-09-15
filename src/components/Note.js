@@ -87,6 +87,7 @@ class Note extends React.Component {
         floatingLabelText="Comment"
         onChange={this.handleCommentChange.bind(this)}
         value={this.state.commentValue}
+        multiLine={true}
         />,
       <RaisedButton
         key='button'

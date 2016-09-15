@@ -92,7 +92,7 @@ class TeamView extends React.Component {
                     secondary={true}
                     label='Go!'
                     style={{height: '100%'}}
-                    labelStyle={{height:'100%', fontSize: '1.5em'}}
+                    labelStyle={{height:'100%', fontSize: '1em'}}
                     onClick={this.handleBoardSubmit.bind(this)}
                   />
               </div>

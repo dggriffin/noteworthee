@@ -100,47 +100,24 @@ export default class NoteDialog extends React.Component {
         modal={false}
         open={this.state.dialogOpen}
         onRequestClose={this.handleDialogClose.bind(this)}
+        titleStyle={{fontWeight: 800, color: '#979797'}}
         >
-
         <TextField
-          floatingLabelText="Message"
-          style={{width:'100%'}}
+          floatingLabelText="Name (Optional)"
           value={this.state.messageValue}
           onChange={this.handleMessageChange.bind(this)}
-          errorText={this.state.messageError}
+          multiLine={true}
           />
+          <TextField
+            floatingLabelText="Message"
+            style={{width:'100%'}}
+            value={this.state.messageValue}
+            onChange={this.handleMessageChange.bind(this)}
+            errorText={this.state.messageError}
+            multiLine={true}
+            />
 
         <AddLink handleUrlChange={this.handleUrlChange.bind(this)}/>
-
-        <div style={{paddingTop: '1em', fontSize: '1em', fontWeight: '300', justifyContent: 'center', display:'flex'}}>
-          This message makes me feel...
-        </div>
-
-        <RadioButtonGroup
-          style={{justifyContent: 'center', display:'flex'}}
-          name="mood"
-          defaultSelected="happy"
-          valueSelected={this.state.moodState}
-          onChange={this.handleMoodChange.bind(this)}
-        >
-
-          <RadioButton
-            value="happy"
-            checkedIcon={<HappyIcon/>}
-            uncheckedIcon={<HappyIconBorder/>}
-            iconStyle={{width: 100, height: 100}}
-            style={{width: 'auto'}}
-          />
-
-          <RadioButton
-            value="sad"
-            checkedIcon={<SadIcon/>}
-            uncheckedIcon={<SadIconBorder/>}
-            iconStyle={{width: 100, height: 100}}
-            style={{width: 'auto'}}
-          />
-
-        </RadioButtonGroup>
 
       </Dialog>
     );
