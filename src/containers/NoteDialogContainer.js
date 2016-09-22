@@ -17,7 +17,9 @@ export default class NoteDialogContainer extends React.Component {
           likes: 0,
           comments: [],
           mood: newNote.moodState,
-          urlList: newNote.urlList
+          urlList: newNote.urlList,
+          tags: newNote.tagList,
+          name: newNote.name
       }
     });
     this.props.handleDialogClose();

@@ -1,6 +1,6 @@
 import styles from 'styles/Note.css';
 import React from 'react';
-import { Dialog, FlatButton, TextField } from 'material-ui';
+import { Dialog, FlatButton, TextField, Chip } from 'material-ui';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import HappyIcon from 'material-ui/svg-icons/social/mood';
 import HappyIconBorder from 'material-ui/svg-icons/social/mood';
@@ -12,8 +12,12 @@ export default class NoteDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      nameValue: '',
       messageValue: '',
       messageError: '',
+      tagValue: '',
+      tagError: '',
+      tagList: [],
       moodState: 'happy',
       dialogOpen: this.props.dialogOpen,
       urlList: []
@@ -21,7 +25,17 @@ export default class NoteDialog extends React.Component {
   }
 
   handleDialogClose() {
-    this.setState({dialogOpen: false, messageValue: '', messageError: ''});
+    this.setState({
+      dialogOpen: false,
+      moodState: 'happy',
+      messageValue: '',
+      messageError: '',
+      tagValue: '',
+      tagList: [],
+      tagError: '',
+      urlList: [],
+      nameValue: ''
+    });
     this.props.handleDialogClose();
   }
 
@@ -43,6 +57,12 @@ export default class NoteDialog extends React.Component {
     this.setState({moodState: value});
   }
 
+  handleNameChange(event) {
+    this.setState({
+      nameValue: event.target.value
+    });
+  }
+
   handleAddNote() {
     if (!this.validateDialog()) {
       return;
@@ -50,7 +70,9 @@ export default class NoteDialog extends React.Component {
     let newNote = {
       messageValue: this.state.messageValue,
       moodState: this.state.moodState,
-      urlList: this.state.urlList
+      urlList: this.state.urlList,
+      tagList: this.state.tagList,
+      name: this.state.nameValue
     };
     this.props.handleAddNote(newNote);
 
@@ -58,8 +80,43 @@ export default class NoteDialog extends React.Component {
       dialogOpen: false,
       moodState: 'happy',
       messageValue: '',
-      urlList: []
+      messageError: '',
+      tagValue: '',
+      tagList: [],
+      tagError: '',
+      urlList: [],
+      nameValue: ''
     });
+  }
+
+  handleTagChange(event, tagValue) {
+    this.setState({tagValue});
+  }
+
+  handleAddTag() {
+    let tags = this.state.tagValue.split(',');
+    let trimmedTags = tags.map((tag) => {
+      return tag.trim();
+    });
+    let filteredTags = trimmedTags.filter((tag) => {
+      return tag.length;
+    });
+    this.setState({tagList: this.state.tagList.concat(filteredTags), tagValue: ''});
+  }
+
+  handleTagDelete(removeTag) {
+    let filteredTags = this.state.tagList.filter((tag) => {
+      return tag !== removeTag;
+    });
+    this.setState({tagList: filteredTags});
+  }
+
+  renderTagChips() {
+    return this.state.tagList.map((tag) => {
+      return <Chip style={{margin: 2}} onRequestDelete={this.handleTagDelete.bind(this, tag)}>
+                {tag}
+             </Chip>
+    })
   }
 
   validateDialog() {
@@ -102,23 +159,80 @@ export default class NoteDialog extends React.Component {
         onRequestClose={this.handleDialogClose.bind(this)}
         titleStyle={{fontWeight: 800, color: '#979797'}}
         >
-        <TextField
-          floatingLabelText="Name (Optional)"
-          value={this.state.messageValue}
-          onChange={this.handleMessageChange.bind(this)}
-          multiLine={true}
+        <div style={{display: 'flex', flexDirection: 'column'}}>
+          <TextField
+            floatingLabelText="Name (Optional)"
+            value={this.state.nameValue}
+            onChange={this.handleNameChange.bind(this)}
+            multiLine={true}
           />
           <TextField
             floatingLabelText="Message"
-            style={{width:'100%'}}
+            style={{width:'70%'}}
             value={this.state.messageValue}
             onChange={this.handleMessageChange.bind(this)}
             errorText={this.state.messageError}
             multiLine={true}
+          />
+          <AddLink handleUrlChange={this.handleUrlChange.bind(this)}/>
+
+            <span style={{fontWeight: 600, fontSize: '1.2em', color: '#979797', paddingTop: 45, paddingBottom: 5}}>
+              Mood
+            </span>
+            <span style={{color: '#979797'}}>
+              Select how this note makes you feel.
+            </span>
+
+          <RadioButtonGroup
+            style={{display:'flex', paddingTop: 5}}
+            name="mood"
+            defaultSelected="happy"
+            valueSelected={this.state.moodState}
+            onChange={this.handleMoodChange.bind(this)}
+          >
+
+            <RadioButton
+              value="happy"
+              checkedIcon={<HappyIcon/>}
+              uncheckedIcon={<HappyIconBorder/>}
+              iconStyle={{width:45, height:45}}
+              style={{width: 'auto'}}
             />
 
-        <AddLink handleUrlChange={this.handleUrlChange.bind(this)}/>
+            <RadioButton
+              value="sad"
+              checkedIcon={<SadIcon/>}
+              uncheckedIcon={<SadIconBorder/>}
+              iconStyle={{width:45, height:45}}
+              style={{width: 'auto'}}
+            />
 
+          </RadioButtonGroup>
+          <span style={{fontWeight: 600, fontSize: '1.2em', color: '#979797', paddingTop: 45, paddingBottom: 5}}>
+            Tags
+          </span>
+          <span style={{color: '#979797'}}>
+            Enter comma-separated tags for your note.
+          </span>
+          <div>
+            <TextField
+              style={{width:'70%'}}
+              hintText='Example: silly, idea, improvement'
+              value={this.state.tagValue}
+              onChange={this.handleTagChange.bind(this)}
+              errorText={this.state.tagError}
+              multiLine={true}
+            />
+            <FlatButton
+              label="add tag"
+              primary={true}
+              onClick={this.handleAddTag.bind(this)}
+              />
+          </div>
+          <div style={{display: 'flex', flexWrap: 'wrap'}}>
+            {this.renderTagChips()}
+          </div>
+        </div>
       </Dialog>
     );
   }

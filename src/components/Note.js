@@ -1,4 +1,5 @@
 import React from 'react';
+import {Chip} from 'material-ui';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -97,6 +98,15 @@ class Note extends React.Component {
     ];
   }
 
+  renderTags() {
+    let tagList = this.props.tags;
+    if (tagList && tagList.length) {
+      return this.props.tags.map((tag) => {
+        return <Chip style={{margin: 2}}>{tag}</Chip>
+      });
+    }
+  }
+
   renderUrls() {
     let urlList = this.props.urlList;
     if (urlList && urlList.length) {
@@ -126,7 +136,7 @@ class Note extends React.Component {
         style={{maxWidth: 325, margin: '.5em'}}
         expandable={true}>
         <CardHeader
-          title='Anonymous'
+          title={this.props.name && this.props.name.trim() ? this.props.name.trim() : 'Anonymous' }
           avatar={this.props.mood === 'happy' ? <HappyIcon style={{fill: '#7BD1EE', width: 50, height: 50}}/> : <SadIcon style={{fill: '#EF5A8F', width: 50, height: 50}}/>}
           actAsExpander={true}
           titleColor={'#646464'}
@@ -154,6 +164,12 @@ class Note extends React.Component {
         <CardText expandable={true}>
           {this.renderCommentSection()}
         </CardText>
+        <CardText style={{borderTop: '1px solid beige'}}>
+          <div style={{display: 'flex', flexWrap: 'wrap'}}>
+            {this.renderTags()}
+          </div>
+        </CardText>
+
       </Card>
     );
   }
