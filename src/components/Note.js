@@ -1,6 +1,7 @@
 import React from 'react';
-import {Chip} from 'material-ui';
+import {Chip, Avatar} from 'material-ui';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import AddCircleIcon from 'material-ui/svg-icons/content/add-circle';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import MenuItem from 'material-ui/MenuItem';
@@ -164,9 +165,14 @@ class Note extends React.Component {
         <CardText expandable={true}>
           {this.renderCommentSection()}
         </CardText>
-        <CardText style={{borderTop: '1px solid beige'}}>
-          <div style={{display: 'flex', flexWrap: 'wrap'}}>
+        <CardText style={{borderTop: '1px solid beige', paddingBottom: 0}}>
+          <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center'}}>
             {this.renderTags()}
+            <Chip
+              onTouchTap={this.props.handleTagDialogOpen.bind(this, this.props.index, this.props.tags)}>
+              <Avatar icon={<AddCircleIcon />}/>
+              Add Tag
+            </Chip>
           </div>
         </CardText>
 

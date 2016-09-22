@@ -40,6 +40,7 @@ class Noteboard extends React.Component {
           index={note.key}
           team={this.props.teamName}
           board={this.props.boardName}
+          handleTagDialogOpen={this.props.handleTagDialogOpen.bind(this)}
         />
       </div>
     );
