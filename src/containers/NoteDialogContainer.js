@@ -18,6 +18,7 @@ export default class NoteDialogContainer extends React.Component {
           comments: [],
           mood: newNote.moodState,
           urlList: newNote.urlList,
+          imageUrl: newNote.imageUrl,
           tags: newNote.tagList,
           name: newNote.name
       }

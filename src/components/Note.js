@@ -1,6 +1,6 @@
 import React from 'react';
 import {Chip, Avatar} from 'material-ui';
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import {Card, CardActions, CardHeader, CardText, CardMedia, CardTitle} from 'material-ui/Card';
 import AddCircleIcon from 'material-ui/svg-icons/content/add-circle';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -99,6 +99,18 @@ class Note extends React.Component {
     ];
   }
 
+  renderImage() {
+    if (this.props.imageUrl) {
+      return    <CardMedia>
+                  <a
+                    target='_blank'
+                    href={this.props.imageUrl}>
+                    <img style={{width: '100%'}} src={this.props.imageUrl} />
+                  </a>
+                </CardMedia>
+    }
+  }
+
   renderTags() {
     let tagList = this.props.tags;
     if (tagList && tagList.length) {
@@ -144,6 +156,7 @@ class Note extends React.Component {
           subtitle={`${this.getElapsedTime()} ago`}
           subtitleStyle={{paddingTop: '1em'}}
           />
+        {this.renderImage()}
         <CardText>
           {this.props.message}
         </CardText>

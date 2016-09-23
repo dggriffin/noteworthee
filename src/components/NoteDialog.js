@@ -7,6 +7,7 @@ import HappyIconBorder from 'material-ui/svg-icons/social/mood';
 import SadIcon from 'material-ui/svg-icons/social/mood-bad';
 import SadIconBorder from 'material-ui/svg-icons/social/mood-bad';
 import AddLink from 'components/AddLink';
+import AddImage from 'components/AddImage';
 
 export default class NoteDialog extends React.Component {
   constructor(props) {
@@ -20,7 +21,8 @@ export default class NoteDialog extends React.Component {
       tagList: [],
       moodState: 'happy',
       dialogOpen: this.props.dialogOpen,
-      urlList: []
+      urlList: [],
+      imageUrl: ''
     };
   }
 
@@ -34,6 +36,7 @@ export default class NoteDialog extends React.Component {
       tagList: [],
       tagError: '',
       urlList: [],
+      imageUrl: '',
       nameValue: ''
     });
     this.props.handleDialogClose();
@@ -71,6 +74,7 @@ export default class NoteDialog extends React.Component {
       messageValue: this.state.messageValue,
       moodState: this.state.moodState,
       urlList: this.state.urlList,
+      imageUrl: this.state.imageUrl,
       tagList: this.state.tagList,
       name: this.state.nameValue
     };
@@ -85,6 +89,7 @@ export default class NoteDialog extends React.Component {
       tagList: [],
       tagError: '',
       urlList: [],
+      imageUrl: '',
       nameValue: ''
     });
   }
@@ -129,9 +134,16 @@ export default class NoteDialog extends React.Component {
 
   handleUrlChange(urlList) {
     let trimmedList = urlList.filter((url) => {
-      return url.trim().length > 0;
+      return url.trim().length;
     });
     this.setState({urlList: trimmedList});
+  }
+
+  handleImageUrlChange(imageUrl) {
+    if (!imageUrl) {
+      return;
+    }
+    this.setState({imageUrl: imageUrl.trim()});
   }
 
   render() {
@@ -174,6 +186,7 @@ export default class NoteDialog extends React.Component {
             errorText={this.state.messageError}
             multiLine={true}
           />
+          <AddImage handleUrlChange={this.handleImageUrlChange.bind(this)}/>
           <AddLink handleUrlChange={this.handleUrlChange.bind(this)}/>
 
             <span style={{fontWeight: 600, fontSize: '1.2em', color: '#979797', paddingTop: 45, paddingBottom: 5}}>

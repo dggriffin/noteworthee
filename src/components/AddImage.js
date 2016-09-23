@@ -4,11 +4,12 @@ import { FlatButton, TextField, IconButton } from 'material-ui';
 import AddCircleIcon from 'material-ui/svg-icons/content/add-circle';
 import RemoveCircleIcon from 'material-ui/svg-icons/content/remove-circle';
 
-class AddLink extends React.Component {
+class AddImage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      urlList: []
+      urlList: [],
+      errorText: ''
     };
   }
 
@@ -18,8 +19,9 @@ class AddLink extends React.Component {
         <TextField
           id={`${index}-url-field`}
           value={url}
-          style={{width:'70%'}}
-          hintText="Enter URL"
+          style={{width: '70%'}}
+          hintText="Enter Image URL"
+          errorText={this.state.errorText}
           onChange={this.handleUrlChange.bind(this, index)}
         />
         <IconButton
@@ -34,20 +36,28 @@ class AddLink extends React.Component {
     let urlList = [...this.state.urlList];
     urlList[index] = event.target.value;
     this.setState({urlList});
-    this.props.handleUrlChange(urlList);
+    if(/\.(jpe?g|png|gif|bmp)$/i.test(event.target.value))
+    {
+      this.props.handleUrlChange(event.target.value);
+      this.setState({errorText: ''})
+    }
+    else {
+      this.setState({errorText: 'Must be a valid image url ending in .jp(e)g, .png, .gif, .bmp'})
+    }
+
   }
 
   handleAddLink() {
     let urlList = [...this.state.urlList];
     urlList.push('');
     this.setState({urlList});
-    this.props.handleUrlChange(urlList);
+    this.props.handleUrlChange('');
   }
 
   handleRemoveLink(index) {
     let urlList = [...this.state.urlList];
     urlList.splice(index, 1);
-    this.setState({urlList});
+    this.setState({urlList, errorText: ''});
     this.props.handleUrlChange(urlList);
   }
 
@@ -56,16 +66,20 @@ class AddLink extends React.Component {
       <div style={{display: 'flex', flexDirection: 'column'}}>
         {this.renderUrlFields()}
         <span>
-          <FlatButton
-            label="Add Link"
-            primary={true}
-            onClick={this.handleAddLink.bind(this)}
-            icon={<AddCircleIcon/>}
+          {
+            this.state.urlList.length ? <div></div> :
+            <FlatButton
+              label="Add Image Link"
+              primary={true}
+              onClick={this.handleAddLink.bind(this)}
+              icon={<AddCircleIcon/>}
             />
+          }
+
         </span>
       </div>
     );
   }
 }
 
-export default AddLink;
+export default AddImage;
