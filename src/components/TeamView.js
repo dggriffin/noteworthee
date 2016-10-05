@@ -7,6 +7,7 @@ import NoteboardContainer from 'containers/NoteboardContainer';
 import NoteDialogContainer from 'containers/NoteDialogContainer';
 import AddTagDialogContainer from 'containers/AddTagDialogContainer';
 import BoardSidebarContainer from 'containers/BoardSidebarContainer';
+import TagSidebarContainer from 'containers/TagSidebarContainer';
 import { TextField, RaisedButton } from 'material-ui';
 import { browserHistory} from 'react-router';
 
@@ -18,6 +19,7 @@ class TeamView extends React.Component {
     this.state = {
       dialogOpen: false,
       tagDialogOpen: false,
+      tagSideBarOpen: false,
       tagDialogData: {},
       boardValue: '',
       ...props
@@ -43,6 +45,14 @@ class TeamView extends React.Component {
 
   handleDialogClose() {
     this.setState({dialogOpen: false});
+  }
+
+  handleTagSidebarOpen() {
+    this.setState({tagSideBarOpen: true});
+  }
+
+  handleTagSidebarClose() {
+    this.setState({tagSideBarOpen: false});
   }
 
   handleTagDialogOpen(note, tagList) {
@@ -84,6 +94,7 @@ class TeamView extends React.Component {
             <NoteboardContainer
               handleDialogOpen={this.handleDialogOpen.bind(this)}
               handleTagDialogOpen={this.handleTagDialogOpen.bind(this)}
+              handleTagSidebarOpen={this.handleTagSidebarOpen.bind(this)}
               teamName={this.state.params.teamName}
               boardName={this.state.params.boardName}
             /> :

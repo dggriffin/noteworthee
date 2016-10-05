@@ -10,7 +10,7 @@ export default class NoteDialogContainer extends React.Component {
   }
 
   addNote(newNote) {
-    base.push(`teams/${this.props.teamName}/${this.props.boardName}`, {
+    let noteKey = base.push(`teams/${this.props.teamName}/${this.props.boardName}`, {
       data: {
           message: newNote.messageValue,
           dateCreated: new Date().getTime(),
@@ -22,6 +22,11 @@ export default class NoteDialogContainer extends React.Component {
           tags: newNote.tagList,
           name: newNote.name
       }
+    });
+    newNote.tagList.forEach((tag) => {
+      base.push(`tags/${this.props.teamName}/${this.props.boardName}/${tag}`, {
+        data: noteKey.key()
+      });
     });
     this.props.handleDialogClose();
   }

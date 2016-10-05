@@ -136,7 +136,8 @@ class Noteboard extends React.Component {
               </IconButton>
               <IconButton
                   tooltip="Show Tag Filters"
-                  tooltipPosition="top-center" >
+                  tooltipPosition="top-center"
+                  onClick={this.props.handleTagSidebarOpen.bind(this)} >
                 <MoreDetailsIcon color='#646464'/>
               </IconButton>
             </span>

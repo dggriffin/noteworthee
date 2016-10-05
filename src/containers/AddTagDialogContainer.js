@@ -15,6 +15,11 @@ export default class AddTagDialogContainer extends React.Component {
     base.post(`teams/${this.props.teamName}/${this.props.boardName}/${this.props.note}/tags`, {
       data: _.uniq(oldTags.concat(newTags))
     });
+    newTags.forEach((tag) => {
+      base.push(`tags/${this.props.teamName}/${this.props.boardName}/${tag}`, {
+        data: this.props.note
+      });
+    });
     this.props.handleDialogClose();
   }
 
