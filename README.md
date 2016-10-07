@@ -32,5 +32,16 @@ Simply click on the ```(+)``` symbol to post your own note:
 
 And that's pretty much it! Users can also anonymous like/comment on individual notes.
 
+## Contrubiting
+
+After you clone the repo simply run:
+
+```
+npm install
+npm start
+```
+
+Noteworthee will then automatically open in your browser.
+
 ## Issues
 This project has been created on a few hours of one man's time, so there's bound to be issues or ways it can improve. If you can into any problems, or have any ideas, please file an issue on the Github repo!

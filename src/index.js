@@ -14,4 +14,5 @@ ReactDOM.render(
         <Route path='/' component={App}>
           <Route path='/:teamName(/:boardName)' component={TeamView}/>
         </Route>
-      </Router>, document.getElementById('app'));
+      </Router>, document.getElementById('app')
+);
