@@ -4,7 +4,7 @@ import Rebase from 're-base';
 import _ from 'underscore';
 const base = Rebase.createClass('https://noteworthyapp.firebaseio.com');
 
-export default class AddTagDialogContainer extends React.Component {
+class AddTagDialogContainer extends React.Component {
 
   constructor(props) {
     super(props);

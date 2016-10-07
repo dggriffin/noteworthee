@@ -1,6 +1,6 @@
 import React from 'react';
 import {Chip, Avatar} from 'material-ui';
-import {Card, CardActions, CardHeader, CardText, CardMedia, CardTitle} from 'material-ui/Card';
+import {Card, CardActions, CardHeader, CardText, CardMedia} from 'material-ui/Card';
 import AddCircleIcon from 'material-ui/svg-icons/content/add-circle';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';

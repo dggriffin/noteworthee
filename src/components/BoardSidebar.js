@@ -3,7 +3,6 @@ import styles from 'styles/BoardSidebar.css'
 import React from 'react';
 import { MenuItem } from 'material-ui';
 import { Link } from 'react-router';
-import BulletIcon from 'material-ui/svg-icons/editor/format-list-bulleted';
 
 const defaultProps = {
   boardList: [],

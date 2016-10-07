@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dialog, FlatButton, TextField, Chip } from 'material-ui';
 
-export default class AddTagDialog extends React.Component {
+class AddTagDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

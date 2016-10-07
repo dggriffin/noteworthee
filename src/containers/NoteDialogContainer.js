@@ -3,7 +3,7 @@ import NoteDialog from 'components/NoteDialog';
 import Rebase from 're-base';
 const base = Rebase.createClass('https://noteworthyapp.firebaseio.com');
 
-export default class NoteDialogContainer extends React.Component {
+class NoteDialogContainer extends React.Component {
 
   constructor(props) {
     super(props);
