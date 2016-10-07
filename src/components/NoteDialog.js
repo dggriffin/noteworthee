@@ -1,4 +1,3 @@
-import styles from 'styles/Note.css';
 import React from 'react';
 import { Dialog, FlatButton, TextField, Chip } from 'material-ui';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
@@ -9,7 +8,7 @@ import SadIconBorder from 'material-ui/svg-icons/social/mood-bad';
 import AddLink from 'components/AddLink';
 import AddImage from 'components/AddImage';
 
-export default class NoteDialog extends React.Component {
+class NoteDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

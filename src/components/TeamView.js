@@ -7,7 +7,6 @@ import NoteboardContainer from 'containers/NoteboardContainer';
 import NoteDialogContainer from 'containers/NoteDialogContainer';
 import AddTagDialogContainer from 'containers/AddTagDialogContainer';
 import BoardSidebarContainer from 'containers/BoardSidebarContainer';
-import TagSidebarContainer from 'containers/TagSidebarContainer';
 import { TextField, RaisedButton } from 'material-ui';
 import { browserHistory} from 'react-router';
 
