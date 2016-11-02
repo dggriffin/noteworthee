@@ -7,6 +7,7 @@ import NoteboardContainer from 'containers/NoteboardContainer';
 import NoteDialogContainer from 'containers/NoteDialogContainer';
 import AddTagDialogContainer from 'containers/AddTagDialogContainer';
 import BoardSidebarContainer from 'containers/BoardSidebarContainer';
+import TagSidebarContainer from 'containers/TagSidebarContainer';
 import { TextField, RaisedButton } from 'material-ui';
 import { browserHistory} from 'react-router';
 
@@ -132,6 +133,11 @@ class TeamView extends React.Component {
             teamName={this.state.params.teamName}
             boardName={this.state.params.boardName}
             {...this.state.tagDialogData}
+          />
+          <TagSidebarContainer
+            teamName={this.state.params.teamName}
+            boardName={this.state.params.boardName}
+            sidebarOpen={this.state.tagSideBarOpen}
           />
         </div>
     );

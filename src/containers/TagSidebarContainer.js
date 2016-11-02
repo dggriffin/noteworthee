@@ -27,6 +27,7 @@ class TagSidebarContainer extends React.Component {
     this.ref = base.syncState(`tags/${teamName}/${boardName}`, {
       context: this,
       state: 'tagList',
+      asArray: true,
       then() {
         this.setState({loading: false});
       }
