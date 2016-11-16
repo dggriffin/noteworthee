@@ -2,12 +2,15 @@ import styles from 'styles/Noteboard.css';
 import React from 'react';
 import FlipMove from 'react-flip-move';
 import NoteContainer from 'containers/NoteContainer'
-import { Paper, CircularProgress, SelectField, MenuItem, FloatingActionButton, IconButton } from 'material-ui';
+import { Paper, CircularProgress, SelectField, MenuItem, FloatingActionButton, IconButton, IconMenu } from 'material-ui';
+import { Scrollbars } from 'react-custom-scrollbars';
+import {ToolbarSeparator} from 'material-ui/Toolbar';
 import HappyIcon from 'material-ui/svg-icons/social/mood';
 import SadIcon from 'material-ui/svg-icons/social/mood-bad';
 import SortIcon from 'material-ui/svg-icons/content/sort';
 import MoreDetailsIcon from 'material-ui/svg-icons/action/chrome-reader-mode';
 import ContentAddIcon from 'material-ui/svg-icons/content/add';
+import SettingsIcon from 'material-ui/svg-icons/action/settings';
 import _ from 'underscore';
 
 const defaultProps = {
@@ -69,6 +72,10 @@ class Noteboard extends React.Component {
     this.setState({sortValue});
   }
 
+  handleArchiveClick() {
+    this.setState({})
+  }
+
   getLatestPostTime() {
     return this.getElapsedTime(_.max(this.props.notes, 'dateCreated').dateCreated);
   }
@@ -104,13 +111,26 @@ class Noteboard extends React.Component {
   render() {
     return (
       <Paper style={{width: '100%', marginLeft: 'auto', marginRight: 'auto', backgroundColor: '#f7f7f7'}}>
+
         <div className={styles.toolbar}>
           <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
             <div style={{display: 'flex', flexDirection:'column', justifyContent:'center'}}>
-              <span className={styles.boardName}> #{this.props.boardName}</span>
+              <span className={styles.boardName}>
+              #{this.props.boardName}
+              </span>
               <span className={styles.lastPost}> Last Post: {this.getLatestPostTime() !== 'NaN seconds' ? this.getLatestPostTime() + ' ago' : 'Never!'}</span>
             </div>
-            <span style={{display: 'flex'}}>
+            <span style={{display: 'flex', flexWrap: 'wrap'}}>
+              <IconMenu
+                iconButtonElement={<IconButton tooltip="Board Options" tooltipPosition="top-center"><SettingsIcon color='#979797'/></IconButton>}
+                anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+                targetOrigin={{horizontal: 'left', vertical: 'top'}}
+              >
+                <MenuItem primaryText="Archive notes..." onClick={this.handleArchiveClick.bind(this)} />
+                <MenuItem primaryText="View previous archives..." />
+                <MenuItem primaryText="Delete board" />
+              </IconMenu>
+              <ToolbarSeparator style={{marginRight: 10, marginLeft: 0}}/>
               <div style={{display: 'flex', alignItems: 'center'}}>
                 <SortIcon color='#EF5A8F' style={{marginLeft: 0}} />
                 <SelectField
@@ -150,13 +170,16 @@ class Noteboard extends React.Component {
             </FloatingActionButton>
           </div>
         </div>
+
         { this.props.loading ? <div style={{height: '82vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}><CircularProgress size={3}/></div> :
-          <FlipMove
-            className={styles.content}
-            enterAnimation="elevator"
-            leaveAnimation="elevator">
-            { this.renderNotes() }
-          </FlipMove>
+          <Scrollbars style={{marginBottom: 100}}>
+            <FlipMove
+              className={styles.content}
+              enterAnimation="elevator"
+              leaveAnimation="elevator">
+              { this.renderNotes() }
+            </FlipMove>
+          </Scrollbars>
         }
       </Paper>
     );

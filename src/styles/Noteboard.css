@@ -9,7 +9,6 @@
   align-items: flex-start;
   padding: 2em;
   height: 83vh;
-  overflow-y: scroll;
 }
 
 .toolbar {
@@ -41,6 +40,7 @@
   font-size: 1.5em;
   font-weight: 600;
   color: #979797;
+  display: flex;
 }
 
 .lastPost {

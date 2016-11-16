@@ -54,7 +54,7 @@ class NoteboardContainer extends React.Component {
     });
   }
 
-  addNote(){
+  addNote() {
     this.setState({
       notes: this.state.notes.concat([{
         message: this.state.messageValue,
@@ -66,6 +66,10 @@ class NoteboardContainer extends React.Component {
       }]),
       dialogOpen: false
     });
+  }
+
+  handleArchiveSubmit() {
+
   }
 
   render() {
