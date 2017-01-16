@@ -7,6 +7,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import {ToolbarSeparator} from 'material-ui/Toolbar';
 import HappyIcon from 'material-ui/svg-icons/social/mood';
 import SadIcon from 'material-ui/svg-icons/social/mood-bad';
+import QuestionIcon from 'material-ui/svg-icons/action/help-outline';
 import SortIcon from 'material-ui/svg-icons/content/sort';
 import MoreDetailsIcon from 'material-ui/svg-icons/action/chrome-reader-mode';
 import ContentAddIcon from 'material-ui/svg-icons/content/add';
@@ -27,6 +28,7 @@ class Noteboard extends React.Component {
     this.state = {
       showSad: true,
       showHappy: true,
+      showQuestion: true,
       sortValue: 'likes'
     };
   }
@@ -53,9 +55,11 @@ class Noteboard extends React.Component {
     return _.sortBy(_.filter(this.props.notes, (note) => {
       switch (note.mood) {
         case 'happy':
-        return this.state.showHappy;
+          return this.state.showHappy;
         case 'sad':
-        return this.state.showSad;
+          return this.state.showSad;
+        case 'question':
+          return this.state.showQuestion;
       }
     }), this.state.sortValue).reverse();
   }
@@ -66,6 +70,10 @@ class Noteboard extends React.Component {
 
   handleToggleSad() {
     this.setState({showSad: !this.state.showSad});
+  }
+
+  handleToggleQuestion() {
+    this.setState({showQuestion: !this.state.showQuestion});
   }
 
   handleSortChange(event, index, sortValue) {
@@ -165,6 +173,13 @@ class Noteboard extends React.Component {
                 onClick={this.handleToggleSad.bind(this)} >
                 <SadIcon color={this.state.showSad ? '#EF5A8F' : '#dedede'}/>
               </IconButton>
+              <IconButton
+                tooltip="Toggle Question Notes"
+                tooltipPosition="top-center"
+                onClick={this.handleToggleQuestion.bind(this)} >
+                <QuestionIcon color={this.state.showQuestion ? '#EF5A8F' : '#dedede'}/>
+              </IconButton>
+
               <IconButton
                 tooltip="Show Tag Filters"
                 tooltipPosition="top-center"

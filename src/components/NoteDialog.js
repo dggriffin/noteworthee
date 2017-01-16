@@ -5,6 +5,8 @@ import HappyIcon from 'material-ui/svg-icons/social/mood';
 import HappyIconBorder from 'material-ui/svg-icons/social/mood';
 import SadIcon from 'material-ui/svg-icons/social/mood-bad';
 import SadIconBorder from 'material-ui/svg-icons/social/mood-bad';
+import QuestionIcon from 'material-ui/svg-icons/action/help-outline';
+import QuestionIconBorder from 'material-ui/svg-icons/action/help-outline';
 import AddLink from 'components/AddLink';
 import AddImage from 'components/AddImage';
 
@@ -117,16 +119,18 @@ class NoteDialog extends React.Component {
 
   renderTagChips() {
     return this.state.tagList.map((tag) => {
-      return <Chip style={{margin: 2}} onRequestDelete={this.handleTagDelete.bind(this, tag)}>
-                {tag}
-             </Chip>
+      return <Chip
+        style={{margin: 2}}
+        onRequestDelete={this.handleTagDelete.bind(this, tag)}>
+        {tag}
+      </Chip>
     })
   }
 
   validateDialog() {
     if (!this.state.messageValue.trim().length > 0) {
-        this.setState({messageError: 'Message field can\'t be empty!'})
-        return false;
+      this.setState({messageError: 'Message field can\'t be empty!'})
+      return false;
     }
     return true;
   }
@@ -176,7 +180,7 @@ class NoteDialog extends React.Component {
             value={this.state.nameValue}
             onChange={this.handleNameChange.bind(this)}
             multiLine={true}
-          />
+            />
           <TextField
             floatingLabelText="Message"
             style={{width:'70%'}}
@@ -184,16 +188,16 @@ class NoteDialog extends React.Component {
             onChange={this.handleMessageChange.bind(this)}
             errorText={this.state.messageError}
             multiLine={true}
-          />
+            />
           <AddImage handleUrlChange={this.handleImageUrlChange.bind(this)}/>
           <AddLink handleUrlChange={this.handleUrlChange.bind(this)}/>
 
-            <span style={{fontWeight: 600, fontSize: '1.2em', color: '#979797', paddingTop: 45, paddingBottom: 5}}>
-              Mood
-            </span>
-            <span style={{color: '#979797'}}>
-              Select how this note makes you feel.
-            </span>
+          <span style={{fontWeight: 600, fontSize: '1.2em', color: '#979797', paddingTop: 45, paddingBottom: 5}}>
+            Mood
+          </span>
+          <span style={{color: '#979797'}}>
+            Select how this note makes you feel.
+          </span>
 
           <RadioButtonGroup
             style={{display:'flex', paddingTop: 5}}
@@ -201,23 +205,43 @@ class NoteDialog extends React.Component {
             defaultSelected="happy"
             valueSelected={this.state.moodState}
             onChange={this.handleMoodChange.bind(this)}
-          >
+            >
 
             <RadioButton
               value="happy"
-              checkedIcon={<HappyIcon/>}
-              uncheckedIcon={<HappyIconBorder/>}
+              checkedIcon={
+                <HappyIcon/>
+              }
+              uncheckedIcon={
+                <HappyIconBorder/>
+              }
               iconStyle={{width:45, height:45}}
               style={{width: 'auto'}}
-            />
+              />
 
             <RadioButton
               value="sad"
-              checkedIcon={<SadIcon/>}
-              uncheckedIcon={<SadIconBorder/>}
+              checkedIcon={
+                <SadIcon/>
+              }
+              uncheckedIcon={
+                <SadIconBorder/>
+              }
               iconStyle={{width:45, height:45}}
               style={{width: 'auto'}}
-            />
+              />
+
+            <RadioButton
+              value="question"
+              checkedIcon={
+                <QuestionIcon/>
+              }
+              uncheckedIcon={
+                <QuestionIconBorder/>
+              }
+              iconStyle={{width:45, height:45}}
+              style={{width: 'auto'}}
+              />
 
           </RadioButtonGroup>
           <span style={{fontWeight: 600, fontSize: '1.2em', color: '#979797', paddingTop: 45, paddingBottom: 5}}>
@@ -234,7 +258,7 @@ class NoteDialog extends React.Component {
               onChange={this.handleTagChange.bind(this)}
               errorText={this.state.tagError}
               multiLine={true}
-            />
+              />
             <FlatButton
               label="add tag"
               primary={true}

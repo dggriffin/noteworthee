@@ -9,6 +9,7 @@ import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
 import HappyIcon from 'material-ui/svg-icons/social/mood';
 import SadIcon from 'material-ui/svg-icons/social/mood-bad';
+import QuestionIcon from 'material-ui/svg-icons/action/help-outline';
 import LinkIcon from 'material-ui/svg-icons/content/link';
 import ThumbIcon from 'material-ui/svg-icons/action/thumb-up';
 import CommentIcon from 'material-ui/svg-icons/communication/comment';
@@ -147,6 +148,17 @@ class Note extends React.Component {
     }
   }
 
+  renderAvatar() {
+    switch (this.props.mood) {
+      case 'happy' :
+        return <HappyIcon style={{fill: '#7BD1EE', width: 50, height: 50}}/>
+      case 'sad' :
+        return <SadIcon style={{fill: '#EF5A8F', width: 50, height: 50}}/>
+      case 'question' :
+        return <QuestionIcon style={{fill: '#bcbcbc', width: 50, height: 50}}/>
+    }
+  }
+
   render() {
     return (
       <Card
@@ -155,7 +167,7 @@ class Note extends React.Component {
         expandable={true}>
         <CardHeader
           title={this.props.name && this.props.name.trim() ? this.props.name.trim() : 'Anonymous' }
-          avatar={this.props.mood === 'happy' ? <HappyIcon style={{fill: '#7BD1EE', width: 50, height: 50}}/> : <SadIcon style={{fill: '#EF5A8F', width: 50, height: 50}}/>}
+          avatar={this.renderAvatar()}
           actAsExpander={true}
           titleColor={'#646464'}
           subtitle={`${this.getElapsedTime()} ago`}
