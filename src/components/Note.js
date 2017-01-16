@@ -18,7 +18,8 @@ class Note extends React.Component {
     super(props);
     this.state = {
       expanded: false,
-      commentValue: ''
+      commentValue: '',
+      selected: false
     };
   }
 
@@ -74,9 +75,12 @@ class Note extends React.Component {
     if (this.props.comments) {
       comments = this.props.comments.map( comment =>
         [
-          <MenuItem key={comment}>
+          <MenuItem key={comment} innerDivStyle={{padding: 0}}>
             <p style={{whiteSpace: 'normal', overflow: 'hidden', lineHeight: 'normal'}}>
+              <span style={{lineHeight: 'normal', color: '#bcbcbc'}}>Anonymous</span>
+              <br/><br/>
               {comment}
+              <br/>
             </p>
           </MenuItem>,
           <Divider />
@@ -89,6 +93,7 @@ class Note extends React.Component {
         floatingLabelText="Comment"
         onChange={this.handleCommentChange.bind(this)}
         value={this.state.commentValue}
+        style={{width: '100%'}}
         multiLine={true}
         />,
       <RaisedButton
@@ -146,7 +151,7 @@ class Note extends React.Component {
     return (
       <Card
         expanded={this.state.expanded}
-        style={{maxWidth: 325, margin: '.5em'}}
+        style={{width: 345, margin: '.5em', backgroundColor: this.state.selected ? '#ededed' : 'white'}}
         expandable={true}>
         <CardHeader
           title={this.props.name && this.props.name.trim() ? this.props.name.trim() : 'Anonymous' }
@@ -155,6 +160,7 @@ class Note extends React.Component {
           titleColor={'#646464'}
           subtitle={`${this.getElapsedTime()} ago`}
           subtitleStyle={{paddingTop: '1em'}}
+          onClick={() => {this.setState({selected: !this.state.selected})}}
           />
         {this.renderImage()}
         <CardText>
@@ -170,8 +176,8 @@ class Note extends React.Component {
           />
           <FlatButton
             secondary={true}
-            icon={<CommentIcon/>}
-            label={` ${this.state.expanded ? 'Hide Comments' : 'Comment'} (${this.props.comments ? this.props.comments.length : '0'})`}
+            label={` ${this.state.expanded ? 'Hide Comments' : ' Show Comments'} (${this.props.comments ? this.props.comments.length : '0'})`}
+            labelStyle={{color: this.state.expanded ? '#bcbcbc' : '#ef5a8f'}}
             onClick={this.handleToggleComments.bind(this)}
           />
         </CardActions>
