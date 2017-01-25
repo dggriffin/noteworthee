@@ -3,7 +3,7 @@ require('styles/index.css');
 import styles from 'styles/TeamView.css'
 import React from 'react';
 import Rebase from 're-base';
-import NoteboardContainer from 'containers/NoteboardContainer';
+import NoteboardContainer from 'containers/NoteboardContainer2';
 import NoteDialogContainer from 'containers/NoteDialogContainer';
 import AddTagDialogContainer from 'containers/AddTagDialogContainer';
 import BoardSidebarContainer from 'containers/BoardSidebarContainer';

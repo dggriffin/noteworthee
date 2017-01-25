@@ -4,7 +4,7 @@ const base = Rebase.createClass('https://noteworthyapp.firebaseio.com');
 
 export function loadNotes(teamName, boardName) {
   return (dispatch) => {
-    dispatch(mountNotesToClient(teamName, boardName))
+    mountNotesToClient(teamName, boardName)
     .then((notes) => {
       dispatch(fetchNotesSuccess(notes));
     });
@@ -13,8 +13,8 @@ export function loadNotes(teamName, boardName) {
 
 function mountNotesToClient(teamName, boardName) {
   return new Promise( (resolve, reject) => {
-    base.listenTo(`teams/${this.props.teamName}/${boardName}`, {
-      context: this,
+    base.fetch(`teams/${teamName}/${boardName}`, {
+      context: {},
       asArray: true,
       queries: {
         orderByChild: 'likes'

@@ -33,6 +33,10 @@ class Noteboard extends React.Component {
     };
   }
 
+  componentDidMount(){
+    this.props.onLoad();
+  }
+
   renderNotes() {
     let notes = this.getFilteredNotes();
     if (!notes.length) {
@@ -197,17 +201,17 @@ class Noteboard extends React.Component {
           </div>
         </div>
 
-        { this.props.loading ?
-          <div style={{height: '82vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-            <CircularProgress size={3}/>
-          </div>
-          :
+        { this.props.viewReady ?
           <FlipMove
             className={styles.content}
             enterAnimation="elevator"
             leaveAnimation="elevator">
             { this.renderNotes() }
           </FlipMove>
+          :
+          <div style={{height: '82vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <CircularProgress size={3}/>
+          </div>
         }
       </Paper>
     );
