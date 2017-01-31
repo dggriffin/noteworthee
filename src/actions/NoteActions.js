@@ -2,9 +2,11 @@ import * as types from '../constants/ActionTypes';
 const Rebase = require('re-base');
 const base = Rebase.createClass('https://noteworthyapp.firebaseio.com');
 
-export function loadNotes(teamName, boardName) {
-  return (dispatch) => {
-    mountNotesToClient(teamName, boardName)
+export function loadNotes() {
+  return (dispatch, getState) => {
+    let { routing } = getState();
+    const pathList = routing.locationBeforeTransitions.pathname.split('/');
+    mountNotesToClient(pathList[1], pathList[2])
     .then((notes) => {
       dispatch(fetchNotesSuccess(notes));
     });

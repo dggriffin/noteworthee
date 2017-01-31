@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import notes from './notes';
-import currentRoute from './currentRoute';
+import { routerReducer } from 'react-router-redux'
 
 const rootReducer = combineReducers({
   notes,
-  currentRoute
+  routing: routerReducer
 });
 
 export default rootReducer;
