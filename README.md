@@ -32,7 +32,7 @@ Simply click on the ```(+)``` symbol to post your own note:
 
 And that's pretty much it! Users can also anonymous like/comment on individual notes.
 
-## Contrubiting
+## Contributing
 
 After you clone the repo simply run:
 
